@@ -63,8 +63,10 @@ def import_stig(stig_path: pathlib.Path, release_date: datetime.date) -> models.
 
 def _get_stig_verison(stig_path):
     base_name = os.path.basename(stig_path)
-    matcher = r"v(\d+)r(\d+).xml"
+    matcher = r"^v(\d+)r(\d+).xml$"
     matches = re.match(matcher, base_name)
+    if not matches:
+        raise ValueError(f"Stig at {stig_path} cannot be version matched.")
     version = matches.group(1)
     release = matches.group(2)
     return release, version

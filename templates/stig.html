@@ -13,7 +13,7 @@
     <tbody>
         {% for control in stig.controls %}
             <tr>
-                <td><a href="/products/{{ product.short_name }}/{{ stig.short_version }}/{{ control.disa_stig_id }}">{{ control.disa_stig_id }}</a></td>
+                <td><a href="/products/{{ product.short_name }}/{{ stig.short_version.lower() }}/{{ control.disa_stig_id }}">{{ control.disa_stig_id }}</a></td>
                 <td>{{ control.cci }}</td>
                 <td>{{ control.title }}</td>
             </tr>
