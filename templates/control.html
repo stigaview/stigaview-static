@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{ control.title }}</h2>
+  <p>
+  <b>STIG ID:</b> {{ control.disa_stig_id }} &nbsp;|&nbsp;
+  <b>CCI: </b>{{ control.cci }}&nbsp;|&nbsp;
+  <b>SRG: </b><a href="#">{{ control.srg }}</a> |
+  <b>Severity: </b>{{ control.severity }}
+  </p>
+  <div class="container-fluid">
+   <div class="row">
+     <div class="span1">
+       <h3>Vulnerability Discussion</h3>
+       {{ control.description | safe }}
+     </div>
+     <div class="span1">
+       <h3>Check</h3>
+       {{ control.check | safe }}
+     </div>
+     <div class="span1">
+       <h3>Fix</h3>
+       {{ control.fix | safe }}
+     </div>
+   </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>{{ product.full_name }} ({{ product.short_name }})</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>STIG</th>
+            <th>Release Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for stig in product.stigs %}
+            <tr>
+                <td><a href="/products/{{ product.short_name}}/{{ stig.short_version.lower()}}">{{ stig.short_version}}</a></td>
+                <td>{{ product.short_name }}</td>
+                <td>{{ stig.title }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
