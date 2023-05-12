@@ -1,13 +1,11 @@
 import argparse
 import datetime
 import os
-import sys
 import pathlib
+import sys
 import tomllib
 
-from stigaview_static import import_stig
-from stigaview_static import models
-from stigaview_static import html_output
+from stigaview_static import html_output, import_stig, models
 
 
 def parse_args() -> argparse.Namespace:
@@ -47,11 +45,13 @@ def main():
     html_output.write_products(products, args.out_dir)
 
 
-def process_product(product: models.Product, product_path: str, config: dict) -> models.Product:
+def process_product(
+    product: models.Product, product_path: str, config: dict
+) -> models.Product:
     product_path = pathlib.Path(product_path)
     stig_files = product_path.glob("v*.xml")
     for file in stig_files:
-        if file.name.startswith('skip'):
+        if file.name.startswith("skip"):
             continue
         date = datetime.date(2023, 1, 1)
         stig = import_stig.import_stig(file, date)
@@ -65,7 +65,9 @@ def process_products(config: dict, input_path: str) -> list[models.Product]:
     for product in products:
         product_path = os.path.join(input_path, product.short_name)
         if not os.path.exists(product_path):
-            sys.stderr.write(f"Unable to find path for {product.short_name} at {product_path}\n")
+            sys.stderr.write(
+                f"Unable to find path for {product.short_name} at {product_path}\n"
+            )
             exit(4)
         product = process_product(product, product_path, config)
         result.append(product)

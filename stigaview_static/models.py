@@ -1,6 +1,6 @@
 from __future__ import annotations
-import datetime
 
+import datetime
 
 
 class Srg:
@@ -21,7 +21,6 @@ class Control:
     cci: str
 
 
-
 class Stig:
     release: int
     version: int
@@ -36,7 +35,7 @@ class Stig:
 
     @property
     def short_version(self) -> str:
-        return f'V{self.version}R{self.release}'
+        return f"V{self.version}R{self.release}"
 
 
 class Product:

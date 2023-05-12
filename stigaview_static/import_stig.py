@@ -36,13 +36,13 @@ def import_stig(stig_path: pathlib.Path, release_date: datetime.date) -> models.
     for group in root.findall("xccdf-1.1:Group", NS):
         for stig_xml in group.findall("xccdf-1.1:Rule", NS):
             srg = group.find("xccdf-1.1:title", NS).text
-            title = stig_xml.find('xccdf-1.1:title', NS).text
+            title = stig_xml.find("xccdf-1.1:title", NS).text
             description_root = _get_description_root(stig_xml)
             cci_from_source = stig_xml.find(
                 "xccdf-1.1:ident[@system='http://cyber.mil/cci']", NS
             ).text
             control = models.Control()
-            control.severity = stig_xml.attrib['severity']
+            control.severity = stig_xml.attrib["severity"]
             control.srg = srg
             control.id = stig_xml.find("xccdf-1.1:version", NS).text
             control.disa_stig_id = control.id
