@@ -43,6 +43,7 @@ def main():
     config = load_config(args.config)
     products = process_products(config, args.input)
     html_output.write_products(products, args.out_dir)
+    html_output.render_stig_index(products, args.out_dir)
 
 
 def process_product(

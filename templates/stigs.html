@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>STIGs</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>STIG</th>
+            <th>Release Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+            {% for stig in products.stig %}
+                <tr>
+                    <td>{{ product.full_name }}</td>
+                    <td>{{ stig.short_version }}</td>
+                    <td>{{ stig.release_date }}</td>
+                </tr>
+            {% endfor %}
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
