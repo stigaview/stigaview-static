@@ -1,0 +1,24 @@
+full_name = "Red Hat Enterprise Linux 8"
+short_name = "rhel8"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2021-01-22
+[stigs.v1r2]
+release_date = 2021-04-23
+[stigs.v1r3]
+release_date = 2021-07-23
+[stigs.v1r4]
+release_date = 2021-10-27
+[stigs.v1r5]
+release_date = 2022-01-27
+[stigs.v1r6]
+release_date = 2022-04-27
+[stigs.v1r7]
+release_date = 2022-04-27
+[stigs.v1r8]
+release_date = 2022-10-21
+[stigs.v1r9]
+release_date = 2023-01-13
+[stigs.v1r10]
+release_date = 2023-04-24

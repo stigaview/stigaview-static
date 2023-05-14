@@ -1,0 +1,8 @@
+full_name = "Ubuntu 18.04"
+short_name = "ubuntu1804"
+
+[stigs]
+[stigs.v2r10]
+release_date = 2023-01-23
+[stigs.vr2r11]
+release_date = 2023-04-24

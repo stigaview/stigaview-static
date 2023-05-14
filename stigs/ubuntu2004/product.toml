@@ -1,0 +1,12 @@
+full_name = "Ubuntu 20.04"
+short_name = "ubuntu2004"
+
+[stigs]
+[stigs.v1r5]
+release_date = 2022-07-27
+[stigs.v1r6]
+release_date = 2022-10-27
+[stigs.v1r7]
+release_date = 2023-01-13
+[stigs.v1r8]
+release_date = 2023-04-24

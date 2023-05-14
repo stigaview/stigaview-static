@@ -1,6 +1,9 @@
 from __future__ import annotations
 
 import datetime
+import pathlib
+import sys
+import tomllib
 
 
 class Srg:
@@ -51,7 +54,16 @@ class Product:
     @staticmethod
     def get_products(config: dict) -> list[Product]:
         products = list()
-        for product in config["products"]:
-            p = Product(config["products"][product]["full_name"], product)
-            products.append(p)
+        products_path = pathlib.Path(config["products_path"])
+        for product in products_path.iterdir():
+            config_path = product.joinpath("product.toml")
+            if not config_path.exists():
+                sys.stderr.write(
+                    f"Unable to find config for {product.name} at {str(config_path.absolute())}"
+                )
+                exit(5)
+            with open(config_path, "r") as config_file:
+                product_config = tomllib.loads(config_file.read())
+                p = Product(product_config["full_name"], product_config["short_name"])
+                products.append(p)
         return products

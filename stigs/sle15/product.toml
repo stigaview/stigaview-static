@@ -1,0 +1,14 @@
+full_name = "SUSE Linux Enterprise 15"
+short_name = "sle15"
+
+[stigs]
+[stigs.v1r4]
+release_date = 2022-10-27
+[stigs.v1r7]
+release_date = 2022-07-27
+[stigs.v1r8]
+release_date = 2022-10-21
+[stigs.v1r9]
+release_date = 2023-01-13
+[stigs.v1r10]
+release_date = 2023-04-24

@@ -1,0 +1,14 @@
+full_name = "Security Requirements Guide - General Purpose Operating System"
+short_name = "srg-gpos"
+
+[stigs]
+[stigs.v2r1]
+release_date = 2021-07-23
+[stigs.v2r2]
+release_date = 2021-11-01
+[stigs.v2r3]
+release_date = 2022-02-21
+[stigs.v2r4]
+release_date = 2022-07-27
+[stigs.v2r5]
+release_date = 2023-01-13

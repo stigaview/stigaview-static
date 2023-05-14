@@ -1,0 +1,16 @@
+full_name = "Oracle Linux 8"
+short_name = "ol8"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2021-07-16
+[stigs.v1r2]
+release_date = 2022-02-17
+[stigs.v1r3]
+release_date = 2022-07-27
+[stigs.v1r4]
+release_date = 2022-10-22
+[stigs.v1r5]
+release_date = 2022-01-13
+[stigs.v1r6]
+release_date = 2023-04-24
