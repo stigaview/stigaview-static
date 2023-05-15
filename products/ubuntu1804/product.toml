@@ -4,5 +4,5 @@ short_name = "ubuntu1804"
 [stigs]
 [stigs.v2r10]
 release_date = 2023-01-23
-[stigs.vr2r11]
+[stigs.v2r11]
 release_date = 2023-04-24

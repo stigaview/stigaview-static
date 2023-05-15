@@ -20,7 +20,7 @@ jobs:
       - name: Poetry Install
         run: poetry install
       - name: Run script
-        run: poetry run python -m stigaview_static -o out stigs
+        run: poetry run python -m stigaview_static -o out products
       - name: Copy Static Assets
         run: cp --verbose -r static/ out/static
       - name: Publish
