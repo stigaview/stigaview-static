@@ -1,0 +1,33 @@
+name: Deploy
+on: [push]
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check out the repository"
+        uses: actions/checkout@v3
+      - name: "Install poetry"
+        run: pipx install poetry
+      - name: "Setup Python"
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Poetry Install
+        run: poetry install
+      - name: Run script
+        run: poetry run python -m stigaview_static -o out stigs
+      - name: Copy Static Assets
+        run: cp --verbose -r static/ out/static
+      - name: Publish
+        uses: cloudflare/pages-action@1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: 'stigaview-static'
+          directory: 'out'
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
