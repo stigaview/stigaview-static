@@ -67,3 +67,12 @@ class Product:
                 p = Product(product_config["full_name"], product_config["short_name"])
                 products.append(p)
         return products
+
+    def __repr__(self):
+        return repr((self.short_name, self.full_name))
+
+    def __le__(self, other):
+        return self.short_name > other.short_name
+
+    def __gt__(self, other):
+        return self.short_name < other.short_name
