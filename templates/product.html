@@ -12,8 +12,7 @@
         {% for stig in product.stigs %}
             <tr>
                 <td><a href="/products/{{ product.short_name}}/{{ stig.short_version.lower()}}">{{ stig.short_version}}</a></td>
-                <td>{{ product.short_name }}</td>
-                <td>{{ stig.title }}</td>
+                <td>{{ stig.release_date }}</td>
             </tr>
         {% endfor %}
     </tbody>
