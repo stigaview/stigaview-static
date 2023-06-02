@@ -1,5 +1,4 @@
 import argparse
-import datetime
 import os
 import pathlib
 import sys
@@ -51,12 +50,19 @@ def process_product(
     product: models.Product, product_path: str, config: dict
 ) -> models.Product:
     product_path = pathlib.Path(product_path)
+    product_config_path = product_path.joinpath("product.toml")
+    with open(product_config_path, "r") as f:
+        product_config = tomllib.loads(f.read())
     stig_files = product_path.glob("v*.xml")
     for file in stig_files:
         if file.name.startswith("skip"):
             continue
-        date = datetime.date(2023, 1, 1)
-        stig = import_stig.import_stig(file, date)
+        short_version = file.name.split(".")[0]
+        if short_version not in product_config["stigs"]:
+            raise ValueError(
+                f"{product.full_name} doesn't have a config for {short_version}"
+            )
+        stig_release_date = product_config["stigs"][short_version]["release_date"]
         product.stigs.append(stig)
     return product
 
