@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Security Requirements Guide IDs (SRGID)</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>SRGID</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for srg in srgs %}
+            <tr>
+                <td>{{ srg.id }}</td>
+                <td>{{ srg.title }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
