@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>{{ product.name }} STIG {{ stig.short_version }}</h1>
+  <a href="/products/{{ product.short_name }}/{{ stig.short_version.lower() }}">View as table</a>
+  {% for control in stig.controls %}
+    <hr>
+    <h2>{{ control.title }}</h2>
+    <p>
+      <b>STIG ID:</b>
+      <a href="/products/{{ product.short_name }}/{{ stig.short_version.lower() }}/{{ control.disa_stig_id }}">{{ control.disa_stig_id }}</a> |
+      <b>CCI: </b>{{ control.cci }}&nbsp;|&nbsp;
+      <b>SRG: </b><a href="#">{{ control.srg }}</a> |
+      <b>Severity: </b>{{ control.severity }}
+    </p>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="span1">
+          <h3>Vulnerability Discussion</h3>
+          {{ control.description | safe }}
+        </div>
+        <div class="span1">
+          <h3>Check</h3>
+          {{ control.check | safe }}
+        </div>
+        <div class="span1">
+          <h3>Fix</h3>
+          {{ control.fix | safe }}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock %}

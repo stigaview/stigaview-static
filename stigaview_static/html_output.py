@@ -29,7 +29,16 @@ def render_stig_detail(out_product, product, stig):
     real_out = os.path.join(real_out_path, "index.html")
     os.makedirs(real_out_path, exist_ok=True)
     render_template("stig.html", real_out, product=product, stig=stig)
+    one_page_out = os.path.join(real_out_path, "onepage")
+    render_onepage_stig_detail(one_page_out, product, stig)
     return real_out_path
+
+
+def render_onepage_stig_detail(out_product, product, stig):
+    real_out = os.path.join(out_product, "index.html")
+    os.makedirs(out_product, exist_ok=True)
+    render_template("one_page_stig.html", real_out, product=product, stig=stig)
+    return out_product
 
 
 def render_control(control, real_out_path):
