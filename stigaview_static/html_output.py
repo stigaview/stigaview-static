@@ -88,8 +88,8 @@ def write_index(out_path: str) -> None:
     render_template("index.html", full_out_path)
 
 
-def render_srg_index(srgs: list[models.Srg], out_path: str) -> None:
+def render_srg_index(srgs: dict, out_path: str) -> None:
     real_out = os.path.join(out_path, "srgs")
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
-    render_template("stigs.html", full_out_path, srgs=srgs)
+    render_template("srgs.html", full_out_path, srgs=srgs)
