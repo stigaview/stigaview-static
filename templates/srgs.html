@@ -9,11 +9,12 @@
         </tr>
     </thead>
     <tbody>
-        {% for srg in srgs %}
+        {% for srg in srgs.keys() %}
             <tr>
-                <td>{{ srg.id }}</td>
-                <td>{{ srg.title }}</td>
+                <td>{{ srg }}</td>
+                <td></td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
+{% endblock %}
