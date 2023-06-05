@@ -9,6 +9,7 @@ import tomllib
 class Srg:
     srg_id: str
     title: str
+    controls: list[Control]
 
 
 class Control:
