@@ -73,7 +73,7 @@ class Product:
         return repr((self.short_name, self.full_name))
 
     def __le__(self, other):
-        return self.short_name > other.short_name
+        return self.short_name < other.short_name
 
     def __gt__(self, other):
-        return self.short_name < other.short_name
+        return self.short_name > other.short_name
