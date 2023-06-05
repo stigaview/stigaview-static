@@ -4,7 +4,7 @@ import pathlib
 import re
 import xml.etree.ElementTree as ET
 
-from stigaview_static import models
+from stigaview_static import models, utils
 
 NS = {
     "xccdf-1.2": "http://checklists.nist.gov/xccdf/1.2",
@@ -29,10 +29,13 @@ def _get_description_root(stig_xml):
     return description_root
 
 
-def import_stig(stig_path: pathlib.Path, release_date: datetime.date) -> models.Stig:
+def import_stig(
+    stig_path: pathlib.Path, release_date: datetime.date
+) -> tuple[models.Stig, dict]:
     root = _get_root_from_xml_path(stig_path)
     release, version = _get_stig_verison(str(stig_path.absolute()))
     stig = models.Stig(version=version, release=release, release_date=release_date)
+    srgs = dict()
     for group in root.findall("xccdf-1.1:Group", NS):
         for stig_xml in group.findall("xccdf-1.1:Rule", NS):
             srg = group.find("xccdf-1.1:title", NS).text
@@ -57,8 +60,9 @@ def import_stig(stig_path: pathlib.Path, release_date: datetime.date) -> models.
             )
             control.cci = cci_from_source
             control.title = title
+            utils.update_dict_list(srgs, srg, control)
             stig.controls.append(control)
-    return stig
+    return stig, srgs
 
 
 def _get_stig_verison(stig_path):

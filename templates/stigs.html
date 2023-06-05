@@ -11,10 +11,13 @@
     </thead>
     <tbody>
         {% for product in products %}
-            {% for stig in products.stig %}
+            <!-- product: {{ product.full_name }} -->
+            <!--    product-stigs : {{ product.stigs }} -->
+            {% for stig in product.stigs %}
+                <!--        stigs : {{ stigs }} -->
                 <tr>
-                    <td>{{ product.full_name }}</td>
-                    <td>{{ stig.short_version }}</td>
+                    <td><a href="/products/{{ product.short_name }}">{{ product.full_name }}</a></td>
+                    <td><a href="/products/{{ product.short_name }}/{{ stig.short_version }}">{{ stig.short_version }}</a></td>
                     <td>{{ stig.release_date }}</td>
                 </tr>
             {% endfor %}

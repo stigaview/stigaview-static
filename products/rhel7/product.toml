@@ -1,0 +1,26 @@
+full_name = "Red Hat Enterprise Linux 7"
+short_name = "rhel7"
+
+[stigs]
+[stigs.v3r1]
+release_date = 2020-10-23
+[stigs.v3r2]
+release_date = 2021-01-22
+[stigs.v3r3]
+release_date = 2021-04-23
+[stigs.v3r4]
+release_date = 2021-07-23
+[stigs.v3r5]
+release_date = 2021-10-27
+[stigs.v3r6]
+release_date = 2022-01-27
+[stigs.v3r7]
+release_date = 2022-04-27
+[stigs.v3r8]
+release_date = 2022-07-22
+[stigs.v3r9]
+release_date = 2022-10-21
+[stigs.v3r10]
+release_date = 2023-01-13
+[stigs.v3r11]
+release_date = 2023-04-24

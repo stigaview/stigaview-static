@@ -1,20 +1,3 @@
-title = "STIG A View STATIC"
-
-[products]
-
-[products.ol7]
-full_name = "Oracle Linux 7"
-[products.ol8]
-full_name = "Oracle Linux 8"
-[products.rhel7]
-full_name = "Red Hat Enterprise Linux 7"
-[products.rhel8]
-full_name = "Red Hat Enterprise Linux 8"
-[products.sle12]
-full_name = "SUSE Linux Enterprise 12"
-[products.sle15]
-full_name = "SUSE Linux Enterprise 15"
-[products.srg-gpos]
-full_name = "Security Requirements Guide - General Purpose Operating System"
-[products.ubuntu2004]
-full_name = "Ubuntu 20.04"
+title = "STIG A View Static"
+site_path = "/"
+products_path = "products"

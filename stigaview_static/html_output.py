@@ -1,4 +1,5 @@
 import os.path
+from multiprocessing import Process
 
 from jinja2 import Environment, FileSystemLoader
 
@@ -28,7 +29,16 @@ def render_stig_detail(out_product, product, stig):
     real_out = os.path.join(real_out_path, "index.html")
     os.makedirs(real_out_path, exist_ok=True)
     render_template("stig.html", real_out, product=product, stig=stig)
+    one_page_out = os.path.join(real_out_path, "onepage")
+    render_onepage_stig_detail(one_page_out, product, stig)
     return real_out_path
+
+
+def render_onepage_stig_detail(out_product, product, stig):
+    real_out = os.path.join(out_product, "index.html")
+    os.makedirs(out_product, exist_ok=True)
+    render_template("one_page_stig.html", real_out, product=product, stig=stig)
+    return out_product
 
 
 def render_control(control, real_out_path):
@@ -49,9 +59,21 @@ def write_products(products: list[models.Product], out_path: str) -> None:
     real_out = os.path.join(out_path, "products")
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
-    render_template("products.html", full_out_path, products=products)
+    render_template("products.html", full_out_path, products=sorted(products))
+    processes = list()
     for product in products:
-        render_product(product, real_out)
+        p = Process(
+            target=render_product,
+            args=(
+                product,
+                real_out,
+            ),
+        )
+        p.start()
+        processes.append(p)
+
+    for process in processes:
+        process.join()
 
 
 def render_stig_index(products: list[models.Product], out_path: str) -> None:
@@ -59,3 +81,15 @@ def render_stig_index(products: list[models.Product], out_path: str) -> None:
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
     render_template("stigs.html", full_out_path, products=products)
+
+
+def write_index(out_path: str) -> None:
+    full_out_path = os.path.join(out_path, "index.html")
+    render_template("index.html", full_out_path)
+
+
+def render_srg_index(srgs: dict, out_path: str) -> None:
+    real_out = os.path.join(out_path, "srgs")
+    full_out_path = os.path.join(real_out, "index.html")
+    os.makedirs(real_out, exist_ok=True)
+    render_template("srgs.html", full_out_path, srgs=srgs)

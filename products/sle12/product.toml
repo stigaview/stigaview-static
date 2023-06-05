@@ -1,0 +1,14 @@
+full_name = "SUSE Linux Enterprise 12"
+short_name = "sle12"
+
+[stigs]
+[stigs.v2r5]
+release_date = 2021-10-27
+[stigs.v2r7]
+release_date = 2022-07-27
+[stigs.v2r8]
+release_date = 2022-10-21
+[stigs.v2r9]
+release_date = 2023-01-13
+[stigs.v2r10]
+release_date = 2023-04-24

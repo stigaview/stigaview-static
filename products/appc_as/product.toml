@@ -1,0 +1,5 @@
+full_name = "Red Hat Ansible Automation Controller App Server"
+short_name = "appc_as"
+[stigs]
+[stigs.v1r1]
+release_date = 2023-04-10
