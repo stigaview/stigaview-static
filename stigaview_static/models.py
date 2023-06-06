@@ -24,12 +24,22 @@ class Control:
     check_content: str
     cci: str
 
+    def __repr__(self):
+        return f"<Control {self.disa_stig_id}>"
+
+    def __le__(self, other):
+        return self.disa_stig_id < other.disa_stig_id
+
+    def __gt__(self, other):
+        return self.disa_stig_id > other.disa_stig_id
+
 
 class Stig:
     release: int
     version: int
     release_date: datetime.date
     controls: list[Control]
+    product: Product
 
     def __init__(self, release: int, version: int, release_date: datetime.date):
         self.release = release
@@ -40,6 +50,15 @@ class Stig:
     @property
     def short_version(self) -> str:
         return f"V{self.version}R{self.release}"
+
+    def __repr__(self):
+        return f"<Stig {self.short_version}>"
+
+    def __le__(self, other):
+        return self.release_date < other.release_date
+
+    def __gt__(self, other):
+        return self.release_date > other.release_date
 
 
 class Product:
@@ -68,6 +87,9 @@ class Product:
                 p = Product(product_config["full_name"], product_config["short_name"])
                 products.append(p)
         return products
+
+    def sort_stigs(self):
+        self.stigs = sorted(self.stigs)
 
     def __repr__(self):
         return repr((self.short_name, self.full_name))

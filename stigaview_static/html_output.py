@@ -31,6 +31,7 @@ def render_stig_detail(out_product, product, stig):
     os.makedirs(real_out_path, exist_ok=True)
     render_template("stig.html", real_out, product=product, stig=stig)
     one_page_out = os.path.join(real_out_path, "onepage")
+    stig.controls = sorted(stig.controls)
     render_onepage_stig_detail(one_page_out, product, stig)
     return real_out_path
 
@@ -53,6 +54,7 @@ def render_product_index(out_path, product):
     real_out = os.path.join(out_path, product.short_name)
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
+    product.stigs = sorted(product.stigs)
     render_template("product.html", full_out_path, product=product)
 
 
@@ -81,7 +83,12 @@ def render_stig_index(products: list[models.Product], out_path: str) -> None:
     real_out = os.path.join(out_path, "stigs")
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
-    render_template("stigs.html", full_out_path, products=products)
+    stigs = list()
+    for product in products:
+        for stig in product.stigs:
+            stig.product = product
+            stigs.append(stig)
+    render_template("stigs.html", full_out_path, stigs=sorted(stigs))
 
 
 def write_index(out_path: str) -> None:
