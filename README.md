@@ -15,7 +15,7 @@ input
 You will need Python 3.11+.
 
 ```
-$ python -m python -m stigaview_static -o out products
+$ python -m stigaview_static -o out products
 ```
 
 ## License
