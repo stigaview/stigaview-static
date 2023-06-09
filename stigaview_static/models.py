@@ -4,25 +4,32 @@ import datetime
 import pathlib
 import sys
 import tomllib
+from typing import List
+
+from pydantic import BaseModel
 
 
-class Srg:
+class Srg(BaseModel):
     srg_id: str
-    title: str
-    controls: list[Control]
+    title: str | None
+    controls: list[Control] = []
+
+    @property
+    def url(self) -> str:
+        return f"/srgs/{ self.srg_id }"
 
 
-class Control:
+class Control(BaseModel):
     srg: Srg
     vulnerability_id: str
     disa_stig_id: str
     severity: str
     title = str
     description: str
-    fix_text: str
     fix: str
-    check_content: str
+    check: str
     cci: str
+    stig: Stig
 
     def __repr__(self):
         return f"<Control {self.disa_stig_id}>"
@@ -33,23 +40,25 @@ class Control:
     def __gt__(self, other):
         return self.disa_stig_id > other.disa_stig_id
 
+    @property
+    def url(self) -> str:
+        return f"/{self.stig.url}/{self.disa_stig_id}"
 
-class Stig:
+
+class Stig(BaseModel):
     release: int
     version: int
     release_date: datetime.date
-    controls: list[Control]
+    controls: List[Control] = []
     product: Product
-
-    def __init__(self, release: int, version: int, release_date: datetime.date):
-        self.release = release
-        self.version = version
-        self.release_date = release_date
-        self.controls = list()
 
     @property
     def short_version(self) -> str:
         return f"V{self.version}R{self.release}"
+
+    @property
+    def url(self) -> str:
+        return f"/products/{self.product.url}/"
 
     def __repr__(self):
         return f"<Stig {self.short_version}>"
@@ -61,15 +70,10 @@ class Stig:
         return self.release_date > other.release_date
 
 
-class Product:
+class Product(BaseModel):
     full_name: str
     short_name: str
-    stigs: list[Stig]
-
-    def __init__(self, full_name: str, short_name: str):
-        self.full_name = full_name
-        self.short_name = short_name
-        self.stigs = list()
+    stigs: list[Stig] = []
 
     @staticmethod
     def get_products(config: dict) -> list[Product]:
@@ -84,7 +88,10 @@ class Product:
                 exit(5)
             with open(config_path, "r") as config_file:
                 product_config = tomllib.loads(config_file.read())
-                p = Product(product_config["full_name"], product_config["short_name"])
+                p = Product(
+                    full_name=product_config["full_name"],
+                    short_name=product_config["short_name"],
+                )
                 products.append(p)
         return products
 
@@ -99,3 +106,7 @@ class Product:
 
     def __gt__(self, other):
         return self.short_name > other.short_name
+
+    @property
+    def url(self) -> str:
+        return f"/products/{self.short_name}"
