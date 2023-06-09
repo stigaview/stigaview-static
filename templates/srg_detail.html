@@ -1,9 +1,9 @@
-{% extends "min_base.html" %}
+{% extends "base.html" %}
 
-{% block title %}{{ srg.srg_id }} Rules{% endblock %}
+{% block title %}{{ srg_id }} Rules{% endblock %}
 
 {% block content %}
-  <h2>{{ srg.srg_id }} Controls</h2>
+  <h2>{{ srg_id }} Controls</h2>
   <table class="table">
     <thead>
     <tr>
@@ -16,9 +16,10 @@
     <tbody>
     {% for control in controls %}
       <tr>
-        <td><a href="{% url "control_detail_product" product=control.stig.product.short_name version=control.stig.version release=control.stig.release id=control.disa_stig_id %}">{{ control.disa_stig_id }}</a></td>
-        <td><a href="{% url "stig_detail" product=control.stig.product.short_name version=control.stig.version release=control.stig.release %}">V{{ control.stig.version }}R{{ control.stig.release }}</a></td>        <td>{{ control.title }}</td>
-        <td><a href="{% url 'product_detail' control.stig.product.short_name %}">{{ control.stig.product.name }}</a></td>
+        <td><a href="{{ control.url }}">{{ control.disa_stig_id }}</a></td>
+        <td><a href="{{ control.stig.url }}">{{ control.stig.short_version }}</a></td>
+        <td>{{ control.title }}</td>
+        <td><a href="{{ control.url }}">{{ control.stig.product.name }}</a></td>
       </tr>
     {% endfor %}
     </tbody>

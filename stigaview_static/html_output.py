@@ -101,3 +101,13 @@ def render_srg_index(srgs: dict, out_path: str) -> None:
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
     render_template("srgs.html", full_out_path, srgs=srgs)
+    render_srg_details(srgs, out_path)
+
+
+def render_srg_details(srgs: dict, out_path: str) -> None:
+    for srg_id in srgs.keys():
+        controls = srgs[srg_id]
+        full_out_path = os.path.join(out_path, "srgs", srg_id)
+        os.makedirs(full_out_path, exist_ok=True)
+        full_out = os.path.join(full_out_path, "index.html")
+        render_template("srg_detail.html", full_out, controls=controls, srg_id=srg_id)

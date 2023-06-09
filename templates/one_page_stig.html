@@ -9,7 +9,7 @@
       <b>STIG ID:</b>
       <a href="/products/{{ product.short_name }}/{{ stig.short_version.lower() }}/{{ control.disa_stig_id }}">{{ control.disa_stig_id }}</a> |
       <b>CCI: </b>{{ control.cci }}&nbsp;|&nbsp;
-      <b>SRG: </b><a href="#">{{ control.srg }}</a> |
+      <b>SRG: </b><a href="{{ control.srg.url }}">{{ control.srg.srg_id }}</a>
       <b>Severity: </b>{{ control.severity }}
     </p>
     <div class="container-fluid">

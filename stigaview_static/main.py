@@ -1,10 +1,16 @@
 import argparse
+import datetime
 import os
 import pathlib
 import sys
 import tomllib
 
 from stigaview_static import html_output, import_stig, models
+
+
+def _prep_models():
+    models.Stig.update_forward_refs()
+    models.Control.update_forward_refs()
 
 
 def parse_args() -> argparse.Namespace:
@@ -38,13 +44,17 @@ def load_config(path: str) -> dict:
 
 
 def main():
+    start_time = datetime.datetime.now()
+    _prep_models()
     args = parse_args()
     config = load_config(args.config)
     products, srg_dict = process_products(config, args.input)
-    html_output.write_products(products, args.out_dir)
     html_output.render_stig_index(products, args.out_dir)
     html_output.render_srg_index(srg_dict, args.out_dir)
     html_output.write_index(args.out_dir)
+    html_output.write_products(products, args.out_dir)
+    endtime = datetime.datetime.now()
+    print(f"This script took {endtime-start_time}")
 
 
 def process_product(
@@ -65,7 +75,7 @@ def process_product(
                 f"{product.full_name} doesn't have a config for {short_version}"
             )
         stig_release_date = product_config["stigs"][short_version]["release_date"]
-        stig, srgs = import_stig.import_stig(file, stig_release_date)
+        stig, srgs = import_stig.import_stig(file, stig_release_date, product)
         product.stigs.append(stig)
         srgs.update(srgs)
     return product, srgs
