@@ -24,7 +24,7 @@ class Control(BaseModel):
     vulnerability_id: str
     disa_stig_id: str
     severity: str
-    title = str
+    title: str
     description: str
     fix: str
     check: str

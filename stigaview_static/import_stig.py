@@ -58,7 +58,6 @@ def import_stig(
                 stig_xml.find("xccdf-1.1:check/xccdf-1.1:check-content", NS).text
             )
             cci = cci_from_source
-            title = title
             vulnerability_id = group.attrib["id"].replace("V-", "")
             control = models.Control(
                 stig=stig,
