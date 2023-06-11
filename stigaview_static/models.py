@@ -42,7 +42,7 @@ class Control(BaseModel):
 
     @property
     def url(self) -> str:
-        return f"/{self.stig.url}/{self.disa_stig_id}"
+        return f"{self.stig.url}/{self.disa_stig_id}"
 
 
 class Stig(BaseModel):
@@ -58,7 +58,7 @@ class Stig(BaseModel):
 
     @property
     def url(self) -> str:
-        return f"/products/{self.product.url}/"
+        return f"{self.product.url}/{self.short_version.lower()}"
 
     def __repr__(self):
         return f"<Stig {self.short_version}>"
