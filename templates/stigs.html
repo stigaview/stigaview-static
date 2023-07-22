@@ -14,7 +14,7 @@
         <tr>
             <td><a href="{{ stig.product.url }}">{{ stig.product.full_name }}</a></td>
             <td><a href="{{ stig.url }}">{{ stig.short_version }}</a></td>
-            <td>{{ stig.release_date }}</td>
+            <td><time datetime="{{ stig.release_date }}">{{ stig.release_date }}</time></td>
         </tr>
     {% endfor %}
     </tbody>
