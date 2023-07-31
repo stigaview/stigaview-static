@@ -10,7 +10,7 @@ packages = [{include = "stigaview_static"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 Jinja2 = "^3.1.2"
-pydantic = "^1.10.9"
+pydantic = "^2.1.1"
 
 [tool.poetry.dev-dependencies]
 black = "^23.7.0"
