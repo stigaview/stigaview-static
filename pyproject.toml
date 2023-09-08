@@ -1,27 +1,15 @@
-[tool.poetry]
+[project]
 name = "stigaview-static"
-version = "0.1.0"
 description = "Create the STIG A View site static from XML."
 authors = ["Matthew Burket <m@tthewburket.com>"]
 license = "GPL-2.0-only"
 readme = "README.md"
 packages = [{include = "stigaview_static"}]
-
-[tool.poetry.dependencies]
-python = "^3.11"
-Jinja2 = "^3.1.2"
-pydantic = "^1.10.12"
-
-[tool.poetry.dev-dependencies]
-black = "^23.7.0"
-
-
-
-[tool.poetry.group.dev.dependencies]
-pre-commit = "^3.4.0"
-black = "^23.7.0"
-isort = "^5.12.0"
-mypy = "^1.5.1"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dynamic = ["version"]
 
 [tool.pycodestyle]
 max-line-length = 120
@@ -30,7 +18,5 @@ exclude = [".tox", ".git" ]
 [tool.mypy]
 python_version = 3.11
 
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[project.scripts]
+stigaview-static = "stigaview_static.__main__:main"
