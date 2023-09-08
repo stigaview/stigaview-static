@@ -1,0 +1,6 @@
+full_name = "Red Hat OpenShift Container Platform"
+short_name = "ocp"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2023-09-08
