@@ -31,4 +31,4 @@ jobs:
           projectName: 'stigaview-static'
           directory: 'out'
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ github.event_name == 'push' && github.repository == 'Mab879/stigaview-static' }}
+        if: ${{ github.repository == 'Mab879/stigaview-static' && github.ref == 'refs/heads/master'}}
