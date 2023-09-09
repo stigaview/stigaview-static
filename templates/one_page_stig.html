@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-  <h1>{{ product.name }} STIG {{ stig.short_version }}</h1>
+    <h2>{{ product.full_name }} STIG V{{ stig.version }}R{{ stig.release }}</h2>
   <a href="/products/{{ product.short_name }}/{{ stig.short_version.lower() }}">View as table</a>
   {% for control in stig.controls %}
     <hr>
