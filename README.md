@@ -1,8 +1,9 @@
 # STIG A View Static
 
 ## Input
+Below is an outline how the `products` directory is layout out.
 ```
-input
+products
     rhel7
         v1r1.xml
         v1r2.xml
