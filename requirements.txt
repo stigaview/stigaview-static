@@ -1,5 +1,5 @@
 Jinja2==3.1.2
-pydantic==1.10.12
+pydantic==1.10.13
 black==23.9.1
 pre-commit==3.4.0
 isort==5.12.0
