@@ -1,0 +1,6 @@
+full_name = "Red Hat Enterprise Linux 9"
+short_name = "rhel9"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2023-10-11
