@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+
+{% block title %}{{ product.full_name }} STIG V{{ stig.version }}R{{ stig.release }}{% endblock %}
 {% block content %}
     <h2>{{ product.full_name }} STIG V{{ stig.version }}R{{ stig.release }}</h2>
   <a href="/products/{{ product.short_name }}/{{ stig.short_version.lower() }}">View as table</a>
