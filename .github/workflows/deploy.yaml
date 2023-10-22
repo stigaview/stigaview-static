@@ -8,6 +8,8 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      PAGES_DIR: out
     steps:
       - name: "Check out the repository"
         uses: actions/checkout@v4
@@ -18,15 +20,17 @@ jobs:
       - name: Python Dependencies Install
         run: pip install -r requirements.txt
       - name: Run script
-        run: python -m stigaview_static -o out products
+        run: python -m stigaview_static -o  ${{ env.PAGES_DIR }} products
       - name: Copy Static Assets
-        run: cp --verbose -r public_html/* out/
+        run: cp --verbose -r public_html/* ${{ env.PAGES_DIR }}/
       - name: Publish
-        uses: cloudflare/pages-action@1
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: 'stigaview-static'
-          directory: 'out'
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-        if: ${{ github.repository == 'Mab879/stigaview-static' && github.ref == 'refs/heads/master'}}
+          branch: master
+          folder: ${{ env.PAGES_DIR }}
+          repository-name: stigaview/stigaview.github.io
+          single-commit: true
+          token: ${{ secrets.STIGAVIEW_PAGES_TOKEN }}
+          git-config-name: stigaview-publisher
+          git-config-email: stigaview_ci@stigaview.com
+        if: ${{ github.repository == 'Mab879/stigaview-static' && github.ref == 'refs/heads/master' }}
