@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+
+{% block title %}{{ product.full_name }}{% endblock %}
 {% block content %}
 <h1>{{ product.full_name }} ({{ product.short_name }})</h1>
 <table class="table">
