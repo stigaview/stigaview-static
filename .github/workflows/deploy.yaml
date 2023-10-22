@@ -20,7 +20,7 @@ jobs:
       - name: Run script
         run: python -m stigaview_static -o out products
       - name: Copy Static Assets
-        run: cp --verbose -r static/ out/static
+        run: cp --verbose -r public_html/* out/
       - name: Publish
         uses: cloudflare/pages-action@1
         with:
