@@ -1,4 +1,5 @@
 import os.path
+import shutil
 from multiprocessing import Process
 
 from jinja2 import Environment, FileSystemLoader
@@ -23,6 +24,7 @@ def render_product(product: models.Product, out_path: str):
         real_out_path = render_stig_detail(out_product, product, stig)
         for control in stig.controls:
             render_control(control, real_out_path)
+    _copy_latest_stig(out_product, product)
 
 
 def render_stig_detail(out_product, product, stig):
@@ -111,3 +113,12 @@ def render_srg_details(srgs: dict, out_path: str) -> None:
         os.makedirs(full_out_path, exist_ok=True)
         full_out = os.path.join(full_out_path, "index.html")
         render_template("srg_detail.html", full_out, controls=controls, srg_id=srg_id)
+
+
+def _copy_latest_stig(out_product: str, product: models.Product):
+    latest_stig = product.latest_stig
+    current_versioned_root = os.path.join(
+        out_product, latest_stig.short_version.lower()
+    )
+    product_latest_path = os.path.join(out_product, "latest")
+    shutil.copytree(current_versioned_root, product_latest_path)

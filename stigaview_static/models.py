@@ -110,3 +110,8 @@ class Product(BaseModel):
     @property
     def url(self) -> str:
         return f"/products/{self.short_name}"
+
+    @property
+    def latest_stig(self) -> Stig:
+        self.sort_stigs()
+        return self.stigs[-1]
