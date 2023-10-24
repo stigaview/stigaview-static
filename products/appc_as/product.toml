@@ -3,3 +3,5 @@ short_name = "appc_as"
 [stigs]
 [stigs.v1r1]
 release_date = 2023-04-10
+[stigs.v1r2]
+release_date = 2023-10-23
