@@ -1,4 +1,4 @@
-full_name = "Red Hat Ansible Automation Controller App Server"
+full_name = "Red Hat Ansible Automation Controller Web Server"
 short_name = "appc_ws"
 [stigs]
 [stigs.v1r1]
