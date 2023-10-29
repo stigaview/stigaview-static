@@ -19,10 +19,8 @@ jobs:
           python-version: 3.11
       - name: Python Dependencies Install
         run: pip install -r requirements.txt
-      - name: Run script
-        run: python -m stigaview_static -o  ${{ env.PAGES_DIR }} products
-      - name: Copy Static Assets
-        run: cp --verbose -r public_html/* ${{ env.PAGES_DIR }}/
+      - name: Build It
+        run: make
       - name: Publish
         uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
