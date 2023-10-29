@@ -1,5 +1,20 @@
+RM = rm
+MKDIR = mkdir
+PYTHON = python
+CP = cp
+FIND = find
+SED = sed
+
+OUT = out
+
+all: build sitemap
+
 build:
-	rm -rf out
-	mkdir out
-	python -m stigaview_static -o out products
-	cp -r public_html/* out/
+	@$(RM) -rf out
+	@$(MKDIR) out
+	@$(PYTHON) -m stigaview_static -o $(OUT)/ products
+	@$(CP) -r public_html/* $(OUT)/
+
+sitemap:
+	@$(FIND) "$(OUT)/" -name "*.html" > "$(OUT)/sitemap.txt"
+	@$(SED) -i "s#out#https://stigaview.com#" "$(OUT)/sitemap.txt"
