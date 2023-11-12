@@ -18,3 +18,4 @@ build:
 sitemap:
 	@$(FIND) "$(OUT)/" -name "*.html" > "$(OUT)/sitemap.txt"
 	@$(SED) -i "s#out#https://stigaview.com#" "$(OUT)/sitemap.txt"
+	@$(SED) -i "s#/index.html##" "$(OUT)/sitemap.txt"
