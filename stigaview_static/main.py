@@ -95,6 +95,11 @@ def process_products(
             )
             exit(4)
         product, srgs = process_product(product, product_path, config)
-        srgs_dict.update(srgs)
+        for srg, controls in srgs.items():
+            if srg not in srgs_dict.keys():
+                srgs_dict[srg] = controls
+            else:
+                for control in controls:
+                    srgs_dict[srg].append(control)
         result.append(product)
     return result, srgs_dict
