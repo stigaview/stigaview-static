@@ -23,6 +23,7 @@ def _get_description_root(stig_xml):
         .text.replace("&lt;", "<")
         .replace("&gt;", ">")
         .replace("&", "&amp;")
+        .replace("<<<", "&lt;&lt;&lt;")
     )
     description += "</root>"
     description_root = ET.ElementTree(ET.fromstring(description)).getroot()
