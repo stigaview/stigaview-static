@@ -1,0 +1,6 @@
+full_name = "macOS 14 - Sonoma"
+short_name = "macos14"
+
+[stigs]
+[stigs.v1r1]
+release_date = "2024-01-19"
