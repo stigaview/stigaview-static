@@ -31,4 +31,4 @@ jobs:
           token: ${{ secrets.STIGAVIEW_PAGES_TOKEN }}
           git-config-name: stigaview-publisher
           git-config-email: stigaview_ci@stigaview.com
-        if: ${{ github.repository == 'Mab879/stigaview-static' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.repository == 'stigaview/stigaview-static' && github.ref == 'refs/heads/master' }}
