@@ -1,0 +1,6 @@
+full_name = "Ubuntu 22.04"
+short_name = "ubuntu2204"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2024-04-04
