@@ -16,7 +16,7 @@ class Srg(BaseModel):
 
     @property
     def url(self) -> str:
-        return f"/srgs/{ self.srg_id }"
+        return f"/srgs/{self.srg_id}"
 
 
 class Control(BaseModel):
