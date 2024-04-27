@@ -1,0 +1,6 @@
+full_name = "Microsoft Windows 10"
+short_name = "win10"
+
+[stigs]
+[stigs.v2r8]
+release_date = 2023-11-02
