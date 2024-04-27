@@ -1,0 +1,6 @@
+full_name = "Microsoft Windows Server 2016"
+short_name = "winserv2016"
+
+[stigs]
+[stigs.v2r7]
+release_date = 2023-10-30
