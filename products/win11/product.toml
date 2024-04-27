@@ -1,0 +1,6 @@
+full_name = "Microsoft Windows 11"
+short_name = "win11"
+
+[stigs]
+[stigs.v1r5]
+release_date = 2023-11-02
