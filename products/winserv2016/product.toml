@@ -4,3 +4,5 @@ short_name = "winserv2016"
 [stigs]
 [stigs.v2r7]
 release_date = 2023-10-30
+[stigs.v2r8]
+release_date = 2024-05-02
