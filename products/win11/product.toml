@@ -4,3 +4,5 @@ short_name = "win11"
 [stigs]
 [stigs.v1r5]
 release_date = 2023-11-02
+[stigs.v1r6]
+release_date = 2024-05-02
