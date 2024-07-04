@@ -96,10 +96,11 @@ def render_stig_index(products: list[models.Product], out_path: str) -> None:
 def write_index(products: list[models.Product], out_path: str) -> None:
     stigs = list()
     for product in products:
-            stigs.extend(product.stigs)
+        stigs.extend(product.stigs)
 
     def _sort_stigs_by_date(stig):
         return stig.release_date
+
     stigs = sorted(stigs, key=_sort_stigs_by_date)
     full_out_path = os.path.join(out_path, "index.html")
     render_template("index.html", full_out_path, stigs=stigs[-9:])
