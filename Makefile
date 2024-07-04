@@ -7,12 +7,15 @@ SED = sed
 
 OUT = out
 
-all: build sitemap
+all: build copy_assets sitemap
 
 build:
 	@$(RM) -rf out
 	@$(MKDIR) out
 	@$(PYTHON) -m stigaview_static -o $(OUT)/ products
+
+
+copy_assets:
 	@$(CP) -r public_html/* $(OUT)/
 
 sitemap:
