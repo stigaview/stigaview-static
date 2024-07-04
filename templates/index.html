@@ -2,5 +2,23 @@
 
 {% block title %}Home{% endblock %}
 {% block content %}
-<h2>Just Another STIG Viewer</h2>
+<h1>Latest STIGs</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>STIG</th>
+            <th>Release Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for stig in stigs %}
+        <tr>
+            <td><a href="{{ stig.product.url }}">{{ stig.product.full_name }}</a></td>
+            <td><a href="{{ stig.url }}">{{ stig.short_version }}</a></td>
+            <td><time datetime="{{ stig.release_date }}">{{ stig.release_date }}</time></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
