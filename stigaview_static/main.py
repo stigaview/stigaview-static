@@ -51,7 +51,7 @@ def main():
     products, srg_dict = process_products(config, args.input)
     html_output.render_stig_index(products, args.out_dir)
     html_output.render_srg_index(srg_dict, args.out_dir)
-    html_output.write_index(args.out_dir)
+    html_output.write_index(products, args.out_dir)
     html_output.write_products(products, args.out_dir)
     endtime = datetime.datetime.now()
     print(f"This script took {endtime-start_time}")
