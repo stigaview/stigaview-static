@@ -13,6 +13,12 @@ input
 
 ## Usage
 You will need Python 3.11+.
+On macOS the provided FreeBSD will not work for the site maps.
+You will need to install GNU Sed.
+
+```
+$ brew install gnu-sed
+```
 
 ```
 $ python -m stigaview_static -o out products
