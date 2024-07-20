@@ -103,7 +103,7 @@ def write_index(products: list[models.Product], out_path: str) -> None:
 
     stigs = sorted(stigs, key=_sort_stigs_by_date)
     full_out_path = os.path.join(out_path, "index.html")
-    render_template("index.html", full_out_path, stigs=stigs[-9:])
+    render_template("index.html", full_out_path, stigs=sorted(stigs[-9:], reverse=True))
 
 
 def render_srg_index(srgs: dict, out_path: str) -> None:
