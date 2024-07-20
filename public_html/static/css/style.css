@@ -89,3 +89,15 @@ th, td {
     border-color: white;
   }
 }
+
+.error_code {
+    font-size: 250px;
+    display: flex;
+    justify-content: center;
+}
+
+.center {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
