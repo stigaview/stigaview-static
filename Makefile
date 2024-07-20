@@ -3,7 +3,13 @@ MKDIR = mkdir
 PYTHON = python
 CP = cp
 FIND = find
+
+UNAME := $(shell uname)
+ifeq ($(UNAME), Darwin)
+SED = gsed
+else
 SED = sed
+endif
 
 OUT = out
 
