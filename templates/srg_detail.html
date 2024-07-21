@@ -2,7 +2,11 @@
 
 {% block title %}{{ srg_id }} Rules{% endblock %}
 {% block content %}
-  <h2>{{ srg_id }} Controls</h2>
+{% if 'GPOS' in srg_id %}
+  <h2><a href="/products/srg-gpos/latest/{{ srg_id }}">{{ srg_id }}</a> Controls</h2>
+{% else %}
+   <h2>{{ srg_id }} Controls</h2>
+{% endif %}
   <table class="table">
     <thead>
     <tr>
