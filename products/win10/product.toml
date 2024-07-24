@@ -6,3 +6,5 @@ short_name = "win10"
 release_date = 2023-11-02
 [stigs.v2r9]
 release_date = 2024-05-02
+[stigs.v3r1]
+release_date = 2024-07-17
