@@ -1,0 +1,5 @@
+full_name = "Microsoft Internet Information Services 10"
+short_name = "iis10"
+
+[stigs.v3r1]
+release_date = 2024-07-17
