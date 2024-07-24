@@ -1,0 +1,6 @@
+full_name = "Security Requirements Guide - Firewall"
+short_name = "srg-firewall"
+
+[stigs]
+[stigs.v3r1]
+release_date = 2024-07-17
