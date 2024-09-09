@@ -5,9 +5,9 @@
   <h2>{{ control.title }}</h2>
   <p>
   <b>STIG ID:</b> {{ control.disa_stig_id }} &nbsp;|&nbsp;
-  <b>CCI: </b>{{ control.cci }}&nbsp;|&nbsp;
   <b>SRG: </b><a href="{{ control.srg.url }}">{{ control.srg.srg_id }}</a> |
-  <b>Severity: </b>{{ control.severity }}
+  <b>Severity: </b>{{ control.severity }}&nbsp;|&nbsp;
+  <b>CCI: </b>{{ ",".join(control.cci) }}
   </p>
   <div class="container-fluid">
    <div class="row">

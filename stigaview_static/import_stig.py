@@ -44,9 +44,12 @@ def import_stig(
             srg_id = group.find("xccdf-1.1:title", NS).text
             title = stig_xml.find("xccdf-1.1:title", NS).text
             description_root = _get_description_root(stig_xml)
-            cci_from_source = stig_xml.find(
+            cci_from_source = stig_xml.findall(
                 "xccdf-1.1:ident[@system='http://cyber.mil/cci']", NS
-            ).text
+            )
+            ccis = list()
+            for cci in cci_from_source:
+                ccis.append(cci.text)
             stig = stig
             severity = stig_xml.attrib["severity"]
             srg = models.Srg(srg_id=srg_id)
@@ -58,7 +61,6 @@ def import_stig(
             check = _disa_text_to_html(
                 stig_xml.find("xccdf-1.1:check/xccdf-1.1:check-content", NS).text
             )
-            cci = cci_from_source
             vulnerability_id = group.attrib["id"].replace("V-", "")
             control = models.Control(
                 stig=stig,
@@ -68,7 +70,7 @@ def import_stig(
                 description=description,
                 fix=fix,
                 check=check,
-                cci=cci,
+                cci=ccis,
                 title=title,
                 vulnerability_id=vulnerability_id,
             )
