@@ -28,7 +28,7 @@ class Control(BaseModel):
     description: str
     fix: str
     check: str
-    cci: str
+    cci: List[str]
     stig: Stig
 
     def __repr__(self):
