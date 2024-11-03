@@ -9,10 +9,11 @@
     <h2 id="{{ control.disa_stig_id }}">{{ control.title }}</h2>
     <p>
     <b><a href="#{{ control.disa_stig_id }}">STIG ID</a>:</b>
-      <a href="/products/{{ product.short_name }}/{{ stig.short_version.lower() }}/{{ control.disa_stig_id }}">{{ control.disa_stig_id }}</a> |
-      <b>SRG: </b><a href="{{ control.srg.url }}">{{ control.srg.srg_id }}</a> |
+      <a href="/products/{{ product.short_name }}/{{ stig.short_version.lower() }}/{{ control.disa_stig_id }}">{{ control.disa_stig_id }}</a>&nbsp;|&nbsp;
+      <b>SRG: </b><a href="{{ control.srg.url }}">{{ control.srg.srg_id }}</a>&nbsp;|&nbsp;
       <b>Severity: </b>{{ control.severity }} &nbsp;|&nbsp;
-      <b>CCI: </b>{{ ",".join(control.cci) }}
+      <b>CCI: </b>{{ ",".join(control.cci) }}&nbsp;|&nbsp;
+      <b>Vulnerability Id:</b> V-{{ control.vulnerability_id }}&nbsp;|&nbsp;
     </p>
     <div class="container-fluid">
       <div class="row">
