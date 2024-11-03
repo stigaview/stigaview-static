@@ -3,3 +3,5 @@ short_name = "iis10"
 
 [stigs.v3r1]
 release_date = 2024-07-17
+[stigs.v3r2]
+release_date = 2024-10-23
