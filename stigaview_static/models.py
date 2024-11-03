@@ -11,7 +11,7 @@ from pydantic import BaseModel
 
 class Srg(BaseModel):
     srg_id: str
-    title: str | None
+    title: str | None = None
     controls: list[Control] = []
 
     @property
