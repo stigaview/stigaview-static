@@ -1,0 +1,6 @@
+full_name = "AlmaLinux OS 9"
+short_name = "alma9"
+
+[stigs]
+[stigs.v1r1]
+release_date = "2024-12-03"
