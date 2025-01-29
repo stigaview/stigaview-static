@@ -1,0 +1,8 @@
+full_name = "macOS 15 - Sequoia"
+short_name = "macos15"
+
+[stigs]
+[[stigs.v1r1]]
+release_date = "2024-10-19"
+[[stigs.v1r2]]
+release_date = "2025-01-28"
