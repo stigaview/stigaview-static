@@ -13,11 +13,13 @@ endif
 
 OUT = out
 
+.PHONY: clean build copy_assets sitemap
+
 all: build copy_assets sitemap
 
 build:
-	@$(RM) -rf out
-	@$(MKDIR) out
+	@$(RM) -rf $(OUT)
+	@$(MKDIR) $(OUT)
 	@$(PYTHON) -m stigaview_static -o $(OUT)/ products
 
 
@@ -28,3 +30,6 @@ sitemap:
 	@$(FIND) "$(OUT)/" -name "*.html" > "$(OUT)/sitemap.txt"
 	@$(SED) -i "s#out#https://stigaview.com#" "$(OUT)/sitemap.txt"
 	@$(SED) -i "s#/index.html##" "$(OUT)/sitemap.txt"
+
+clean:
+	@$(RM) -rf $(OUT)
