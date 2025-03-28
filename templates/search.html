@@ -1,0 +1,30 @@
+<div id="search-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" tabindex="-1">
+    <div class="modal-overlay" tabindex="-1"></div>
+    <div class="modal-content">
+        <button type="button" class="modal-close-btn" aria-label="Close" id="close-search-modal">&times;</button>
+        <h2 id="modal-title">Search Content</h2>
+        <input type="search" id="modal-search-input" placeholder="Type to search..." autocomplete="off"
+               aria-label="Search query"
+               aria-controls="modal-search-results"
+               aria-autocomplete="list"/>
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="product-select">Product:</label>
+                <select id="product-select">
+                    <option value="">All Products</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="stig-select">STIG Version:</label>
+                <select id="stig-select" disabled>
+                    <option value="">All Versions</option>
+                </select>
+            </div>
+             <button id="clear-filters" class="hidden btn">Clear Filters</button>
+        </div>
+        <div id="modal-search-results" class="search-results" aria-live="polite">
+            <p class="results-placeholder">Start typing to see results.</p>
+        </div>
+    </div>
+</div>
