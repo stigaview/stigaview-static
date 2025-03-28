@@ -5,7 +5,7 @@ import pathlib
 import sys
 import tomllib
 
-from stigaview_static import html_output, import_stig, models
+from stigaview_static import html_output, import_stig, json_output, models
 
 
 def _prep_models():
@@ -53,6 +53,7 @@ def main():
     html_output.render_srg_index(srg_dict, args.out_dir)
     html_output.write_index(products, args.out_dir)
     html_output.write_products(products, args.out_dir)
+    json_output.write_product_stig_map(products, args.out_dir)
     endtime = datetime.datetime.now()
     print(f"This script took {endtime-start_time}")
 
