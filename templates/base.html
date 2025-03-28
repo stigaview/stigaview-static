@@ -1,34 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="x-ua-compatible" content="ie=edge"/>
-  <title>{% block title %}STIG-A-View{% endblock title %} - STIG-A-View</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Online STIG viewer"/>
-  <meta name="generator" content="STIG-A-View Static - {{ git_sha }}"/>
-  <link href="/static/css/style.css" rel="stylesheet" />
-  <link href="/favicon.png" rel="shortcut icon" />
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>{% block title %}STIG-A-View{% endblock title %} - STIG-A-View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="description" content="Online STIG viewer"/>
+    <meta name="generator" content="STIG-A-View Static - {{ git_sha }}"/>
+    <link href="/static/css/style.css" rel="stylesheet"/>
+    <link href="/favicon.png" rel="shortcut icon"/>
 </head>
 <body>
 <nav class="navbar">
-  <a class="navbar-brand" href="/">STIG-A-View</a>
-  <ul>
-    <li><a href="/">Home</a></li>
-    <li><a class="nav-link" href="/stigs">STIGs</a></li>
-    <li><a class="nav-link" href="/products">Products</a></li>
-  </ul>
+    <a class="navbar-brand" href="/">STIG-A-View</a>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a class="nav-link" href="/stigs">STIGs</a></li>
+        <li><a class="nav-link" href="/products">Products</a></li>
+        <li class="float-right">
+            <button aria-haspopup="dialog" aria-controls="search-modal" id="open-search-modal-btn" class="btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                     viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+            </button>
+        </li>
+    </ul>
 </nav>
 <div class="container">
-{% block content %}
-  <p>Use this document as a way to quick start any new project.</p>
-{% endblock content %}
+    {% block content %}
+    <p>Use this document as a way to quick start any new project.</p>
+    {% endblock content %}
 </div>
 <div class="footer">
-  <hr/>
-  This website is not created by, run, approved, or endorsed by the U.S. Department of Defense.
-  Use at your own risk. This website is created by
-  <a href="https://github.com/Mab879/stigaview-static" target="_blank">open-source</a> software.
+    <hr/>
+    This website is not created by, run, approved, or endorsed by the U.S. Department of Defense.
+    Use at your own risk. This website is created by
+    <a href="https://github.com/Mab879/stigaview-static" target="_blank">open-source</a> software.
 </div>
+{% include 'search.html' %}
 </body>
+<script src="/static/js/search.js"></script>
 </html>
