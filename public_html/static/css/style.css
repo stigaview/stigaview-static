@@ -8,7 +8,7 @@ nav {
     overflow: hidden;
 }
 
-nav a {
+nav a, nav a:visited {
     float: left;
     display: block;
     color: #f2f2f2;
