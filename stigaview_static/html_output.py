@@ -2,6 +2,7 @@ import multiprocessing
 import os.path
 import shutil
 
+import minify_html
 from jinja2 import Environment, FileSystemLoader
 
 from stigaview_static import models
@@ -13,8 +14,9 @@ def render_template(template: str, out_path: str, **kwargs):
     env = Environment(loader=file_loader)
     template = env.get_template(template)
     output = template.render(git_sha=get_git_revision_short_hash(), **kwargs)
+    minified = minify_html.minify(output)
     with open(out_path, "w") as fp:
-        fp.write(output)
+        fp.write(minified)
 
 
 def render_product(product: models.Product, out_path: str):
