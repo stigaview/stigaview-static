@@ -16,19 +16,8 @@ jobs:
       - name: "Setup Python"
         uses: actions/setup-python@v5
         with:
-          python-version: 3.12
+          python-version: 3.13
       - name: Python Dependencies Install
         run: pip install -r requirements.txt
       - name: Build It
         run: make
-      - name: Publish
-        uses: JamesIves/github-pages-deploy-action@v4.7.2
-        with:
-          branch: master
-          folder: ${{ env.PAGES_DIR }}
-          repository-name: stigaview/stigaview.github.io
-          single-commit: true
-          token: ${{ secrets.STIGAVIEW_PAGES_TOKEN }}
-          git-config-name: stigaview-publisher
-          git-config-email: stigaview_ci@stigaview.com
-        if: ${{ github.repository == 'stigaview/stigaview-static' && github.ref == 'refs/heads/master' }}
