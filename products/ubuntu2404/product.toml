@@ -1,0 +1,6 @@
+full_name = "Ubuntu 24.04"
+short_name = "ubuntu2404"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2025-02-21
