@@ -9,6 +9,7 @@
     <meta name="generator" content="STIG-A-View Static - {{ git_sha }}"/>
     <link href="/static/css/style.css" rel="stylesheet"/>
     <link href="/favicon.png" rel="shortcut icon"/>
+    <link rel="apple-touch-icon" href="/favicon.png"/>
 </head>
 <body>
 <nav class="navbar">
@@ -18,7 +19,7 @@
         <li><a class="nav-link" href="/stigs">STIGs</a></li>
         <li><a class="nav-link" href="/products">Products</a></li>
         <li class="float-right">
-            <button name="search" aria-haspopup="dialog" aria-controls="search-modal" id="open-search-modal-btn" class="btn">
+            <button name="search" aria-haspopup="dialog" aria-controls="search-modal" id="open-search-modal-btn" class="btn" title="search">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
                      viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -39,6 +40,6 @@
     <a href="https://github.com/Mab879/stigaview-static" target="_blank">open-source</a> software.
 </div>
 {% include 'search.html' %}
-</body>
 <script src="/static/js/search.js" async></script>
+</body>
 </html>
