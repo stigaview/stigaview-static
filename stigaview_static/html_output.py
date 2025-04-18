@@ -1,7 +1,8 @@
+import multiprocessing
 import os.path
 import shutil
-from multiprocessing import Process
 
+import minify_html
 from jinja2 import Environment, FileSystemLoader
 
 from stigaview_static import models
@@ -13,8 +14,9 @@ def render_template(template: str, out_path: str, **kwargs):
     env = Environment(loader=file_loader)
     template = env.get_template(template)
     output = template.render(git_sha=get_git_revision_short_hash(), **kwargs)
+    minified = minify_html.minify(output)
     with open(out_path, "w") as fp:
-        fp.write(output)
+        fp.write(minified)
 
 
 def render_product(product: models.Product, out_path: str):
@@ -65,20 +67,8 @@ def write_products(products: list[models.Product], out_path: str) -> None:
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
     render_template("products.html", full_out_path, products=sorted(products))
-    processes = list()
-    for product in products:
-        p = Process(
-            target=render_product,
-            args=(
-                product,
-                real_out,
-            ),
-        )
-        p.start()
-        processes.append(p)
-
-    for process in processes:
-        process.join()
+    with multiprocessing.Pool(multiprocessing.cpu_count()) as pool:
+        pool.starmap(render_product, [(product, real_out) for product in products])
 
 
 def render_stig_index(products: list[models.Product], out_path: str) -> None:

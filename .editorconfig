@@ -7,10 +7,14 @@ root = true
 [**]
 end_of_line = lf
 insert_final_newline = true
+tailing_whitespace = false
+
+[**.xml]
+tailing_whitespace = true # Don't change the files that DISA provides
 
 [Makefile]
 indent_style = tab
 
-[**.py]
+[{**.py, **.css, **.js, **.html}]
 indent_size = 4
 indent_style = space
