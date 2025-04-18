@@ -1,4 +1,5 @@
 import datetime
+import html
 import os.path
 import pathlib
 import re
@@ -13,7 +14,7 @@ NS = {
 
 
 def _disa_text_to_html(text: str) -> str:
-    return text.replace("\n", "<br />")
+    return html.escape(text, True).replace("\n", "<br />")
 
 
 def _get_description_root(stig_xml):
