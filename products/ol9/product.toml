@@ -1,0 +1,6 @@
+full_name = "Oracle Linux 9"
+short_name = "ol9"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2025-04-24
