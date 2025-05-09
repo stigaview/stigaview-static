@@ -485,3 +485,7 @@ em {
 .float-right {
     float: right;
 }
+
+#stig_id_column {
+    width: 8em;
+}
