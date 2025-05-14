@@ -18,6 +18,7 @@
         <li><a href="/">Home</a></li>
         <li><a class="nav-link" href="/stigs">STIGs</a></li>
         <li><a class="nav-link" href="/products">Products</a></li>
+        {%- if use_search %}
         <li class="float-right">
             <button name="search" aria-haspopup="dialog" aria-controls="search-modal" id="open-search-modal-btn" class="btn" title="search">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
@@ -26,6 +27,7 @@
                 </svg>
             </button>
         </li>
+        {%-  endif %}
     </ul>
 </nav>
 <div class="container">
@@ -39,7 +41,9 @@
     Use at your own risk. This website is created by
     <a href="https://github.com/Mab879/stigaview-static" target="_blank">open-source</a> software.
 </div>
+{%- if use_search %}
 {% include 'search.html' %}
 <script src="/static/js/search.js" async></script>
+{%- endif %}
 </body>
 </html>
