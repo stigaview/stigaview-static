@@ -82,12 +82,13 @@ def import_stig(
 
 def _get_stig_version(stig_path):
     base_name = os.path.basename(stig_path)
-    matcher = r"^v(\d+)r(\d+).xml$"
+    matcher = r"^v(?P<version>\d+)r(?P<release>\d+).xml$"
     matches = re.match(matcher, base_name)
     if not matches:
         raise ValueError(f"Stig at {stig_path} cannot be version matched.")
-    version = matches.group(1)
-    release = matches.group(2)
+    groups = matches.groupdict()
+    version = groups["version"]
+    release = groups["release"]
     return release, version
 
 
