@@ -6,14 +6,16 @@ import minify_html
 from jinja2 import Environment, FileSystemLoader
 
 from stigaview_static import models
-from stigaview_static.utils import get_git_revision_short_hash
+from stigaview_static.utils import get_config, get_git_revision_short_hash
 
 
 def render_template(template: str, out_path: str, **kwargs):
     file_loader = FileSystemLoader("templates")
     env = Environment(loader=file_loader)
     template = env.get_template(template)
-    output = template.render(git_sha=get_git_revision_short_hash(), **kwargs)
+    config = get_config()
+    context = kwargs | config
+    output = template.render(git_sha=get_git_revision_short_hash(), **context)
     minified = minify_html.minify(output)
     with open(out_path, "w") as fp:
         fp.write(minified)

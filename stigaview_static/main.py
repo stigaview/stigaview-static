@@ -37,6 +37,7 @@ def load_config(path: str) -> dict:
     if not os.path.exists(path):
         sys.stderr.write(f"Config file not found: {path}\n")
         exit(3)
+    os.environ.setdefault("STIGAVIEW_CONFIG", path)
     with open(path) as f:
         content = f.read()
         data = tomllib.loads(content)
