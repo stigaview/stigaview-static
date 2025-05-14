@@ -44,7 +44,7 @@ def load_config(path: str) -> dict:
 
 
 def main():
-    start_time = datetime.datetime.now()
+    start_time = datetime.datetime.now(datetime.timezone.utc)
     _prep_models()
     args = parse_args()
     config = load_config(args.config)
@@ -54,7 +54,7 @@ def main():
     html_output.write_index(products, args.out_dir)
     html_output.write_products(products, args.out_dir)
     json_output.write_product_stig_map(products, args.out_dir)
-    endtime = datetime.datetime.now()
+    endtime = datetime.datetime.now(datetime.timezone.utc)
     print(f"This script took {endtime-start_time}")
 
 
