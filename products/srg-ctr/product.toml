@@ -1,0 +1,6 @@
+full_name = "Security Requirements Guide - Container Platform"
+short_name = "srg-ctr"
+
+[stigs]
+[stigs.v2r2]
+release_date = 2025-01-28
