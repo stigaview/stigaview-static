@@ -33,6 +33,7 @@ disa_to_shortname = {
     "MS_Windows_Server_2016": "winserv2016",
     "MS_Windows_Server_2019": "winserv2019",
     "MS_Windows_Server_2022": "winserv2022",
+    "Container_Platform": "srg-ctr",
 }
 
 
@@ -45,9 +46,7 @@ def main() -> int:
     for current_zip in zip_files:
         full_zip_path = download_root / current_zip
         with zipfile.ZipFile(full_zip_path, "r") as z:
-            product_regex = (
-                r"U_(?P<product>.+)_V(?P<version>\d+)R(?P<release>\d+)_STIG\.zip"
-            )
+            product_regex = r"U_(?P<product>.+)_V(?P<version>\d+)R(?P<release>\d+)_(?P<type>STIG|SRG)\.zip"
             matches = re.matches = re.search(product_regex, current_zip).groupdict()
             version = matches["version"]
             release = matches["release"]
