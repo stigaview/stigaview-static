@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import pathlib
-import sys
 import tomllib
 from typing import List
 
@@ -82,7 +82,7 @@ class Product(BaseModel):
         for product in products_path.iterdir():
             config_path = product.joinpath("product.toml")
             if not config_path.exists():
-                sys.stderr.write(
+                logging.error(
                     f"Unable to find config for {product.name} at {str(config_path.absolute())}"
                 )
                 exit(5)

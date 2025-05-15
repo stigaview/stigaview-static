@@ -1,3 +1,4 @@
+import logging
 import multiprocessing
 import os.path
 import shutil
@@ -91,6 +92,7 @@ def write_products(products: list[models.Product], out_path: str) -> None:
 
 
 def render_stig_index(products: list[models.Product], out_path: str) -> None:
+    logging.info("Rendering stig index")
     real_out = os.path.join(out_path, "stigs")
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
@@ -103,6 +105,7 @@ def render_stig_index(products: list[models.Product], out_path: str) -> None:
 
 
 def write_index(products: list[models.Product], out_path: str) -> None:
+    logging.info("Writing index")
     stigs = list()
     for product in products:
         stigs.extend(product.stigs)
@@ -116,6 +119,7 @@ def write_index(products: list[models.Product], out_path: str) -> None:
 
 
 def render_srg_index(srgs: dict, out_path: str) -> None:
+    logging.info("Rendering SRG index")
     real_out = os.path.join(out_path, "srgs")
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)

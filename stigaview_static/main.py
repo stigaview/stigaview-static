@@ -1,5 +1,6 @@
 import argparse
 import datetime
+import logging
 import os
 import pathlib
 import sys
@@ -13,7 +14,17 @@ from stigaview_static import html_output, import_stig, json_output, models
 def _prep_models():
     models.Stig.update_forward_refs()
     models.Control.update_forward_refs()
+    logging.info("Preparing models")
 
+def _log_level_type(value: str) -> int:
+    try:
+        level = logging.getLevelName(value.upper())
+        # getLevelName returns the string if not found, so check if it's an integer
+        if isinstance(level, int):
+            return level
+        raise argparse.ArgumentTypeError(f"Invalid log level: {value}")
+    except AttributeError:
+        raise argparse.ArgumentTypeError(f"Invalid log level: {value}")
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -32,12 +43,16 @@ def parse_args() -> argparse.Namespace:
         help="Path to config file, defaults to stigaview.toml",
         default="stigaview.toml",
     )
+    parser.add_argument(
+        "-l", "--log-level", help="Log level", default="DEBUG", type=_log_level_type
+    )
     return parser.parse_args()
 
 
 def load_config(path: str) -> dict:
+    logging.info("Loading global config")
     if not os.path.exists(path):
-        sys.stderr.write(f"Config file not found: {path}\n")
+        logging.error(f"No such file: {path}")
         exit(3)
     os.environ.setdefault("STIGAVIEW_CONFIG", path)
     with open(path) as f:
@@ -48,8 +63,13 @@ def load_config(path: str) -> dict:
 
 def main():
     start_time = datetime.datetime.now(datetime.timezone.utc)
+    args = _parse_args()
+    logging.basicConfig(
+        level=logging.getLevelName(args.log_level),
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        handlers=[logging.StreamHandler(sys.stderr)],
+    )
     _prep_models()
-    args = parse_args()
     config = load_config(args.config)
     products, srg_dict = process_products(config, args.input)
     html_output.render_stig_index(products, args.out_dir)
@@ -58,7 +78,7 @@ def main():
     html_output.write_products(products, args.out_dir)
     json_output.write_product_stig_map(products, args.out_dir)
     endtime = datetime.datetime.now(datetime.timezone.utc)
-    print(f"This script took {endtime-start_time}")
+    logging.info(f"This script took {endtime-start_time}")
 
 
 def process_product(
@@ -103,14 +123,14 @@ def process_products(
     products = models.Product.get_products(config)
     result = list()
     srgs_dict = dict()
-            sys.stderr.write(
-                f"Unable to find path for {product.short_name} at {product_path}\n"
-            )
     total_files = _get_total_files(input_path, products)
     with tqdm(total=total_files, desc="Processing all STIG files", unit="file") as pbar:
         for product in products:
             product_path = pathlib.Path(input_path) / product.short_name
             if not product_path.exists():
+                logging.error(
+                    f"Unable to find path for {product.short_name} at {product_path}"
+                )
                 exit(4)
             product, srgs = process_product(product, product_path, pbar)
             for srg, controls in srgs.items():
