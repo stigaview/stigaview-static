@@ -5,6 +5,8 @@ import pathlib
 import sys
 import tomllib
 
+from tqdm.auto import tqdm
+
 from stigaview_static import html_output, import_stig, json_output, models
 
 
@@ -79,8 +81,20 @@ def process_product(
         stig_release_date = product_config["stigs"][short_version]["release_date"]
         stig, srgs = import_stig.import_stig(file, stig_release_date, product)
         product.stigs.append(stig)
+        srgs.update(file_srgs)
+        pbar.update(1)
         srgs.update(srgs)
     return product, srgs
+
+
+def _get_total_files(input_path, products):
+    # Count total files to process
+    total_files = 0
+    for product in products:
+        product_path = pathlib.Path(input_path) / product.short_name
+        if product_path.exists():
+            total_files += len(list(product_path.glob("v*.xml")))
+    return total_files
 
 
 def process_products(
@@ -89,19 +103,21 @@ def process_products(
     products = models.Product.get_products(config)
     result = list()
     srgs_dict = dict()
-    for product in products:
-        product_path = os.path.join(input_path, product.short_name)
-        if not os.path.exists(product_path):
             sys.stderr.write(
                 f"Unable to find path for {product.short_name} at {product_path}\n"
             )
-            exit(4)
-        product, srgs = process_product(product, product_path, config)
-        for srg, controls in srgs.items():
-            if srg not in srgs_dict.keys():
-                srgs_dict[srg] = controls
-            else:
-                for control in controls:
-                    srgs_dict[srg].append(control)
-        result.append(product)
+    total_files = _get_total_files(input_path, products)
+    with tqdm(total=total_files, desc="Processing all STIG files", unit="file") as pbar:
+        for product in products:
+            product_path = pathlib.Path(input_path) / product.short_name
+            if not product_path.exists():
+                exit(4)
+            product, srgs = process_product(product, product_path, pbar)
+            for srg, controls in srgs.items():
+                if srg not in srgs_dict.keys():
+                    srgs_dict[srg] = controls
+                else:
+                    for control in controls:
+                        srgs_dict[srg].append(control)
+            result.append(product)
     return result, srgs_dict
