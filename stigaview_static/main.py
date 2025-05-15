@@ -99,11 +99,10 @@ def process_product(
                 f"{product.full_name} doesn't have a config for {short_version}"
             )
         stig_release_date = product_config["stigs"][short_version]["release_date"]
-        stig, srgs = import_stig.import_stig(file, stig_release_date, product)
+        stig, file_srgs = import_stig.import_stig(file, stig_release_date, product)
         product.stigs.append(stig)
         srgs.update(file_srgs)
         pbar.update(1)
-        srgs.update(srgs)
     return product, srgs
 
 
