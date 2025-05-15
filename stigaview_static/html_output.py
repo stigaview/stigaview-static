@@ -4,6 +4,7 @@ import shutil
 
 import minify_html
 from jinja2 import Environment, FileSystemLoader
+from tqdm import tqdm
 
 from stigaview_static import models
 from stigaview_static.utils import get_config, get_git_revision_short_hash
@@ -64,13 +65,29 @@ def render_product_index(out_path, product):
     render_template("product.html", full_out_path, product=product)
 
 
+def process_product_args(args):
+    product, real_out = args
+    return render_product(product, real_out)
+
+
 def write_products(products: list[models.Product], out_path: str) -> None:
+    logging.info("Beginning rendering products")
     real_out = os.path.join(out_path, "products")
     full_out_path = os.path.join(real_out, "index.html")
     os.makedirs(real_out, exist_ok=True)
     render_template("products.html", full_out_path, products=sorted(products))
     with multiprocessing.Pool(multiprocessing.cpu_count()) as pool:
-        pool.starmap(render_product, [(product, real_out) for product in products])
+        list(
+            tqdm(
+                pool.imap(
+                    process_product_args, [(product, real_out) for product in products]
+                ),
+                total=len(products),
+                desc="Rendering products",
+                mininterval=0.5,
+                unit="product",
+            )
+        )
 
 
 def render_stig_index(products: list[models.Product], out_path: str) -> None:
@@ -107,7 +124,7 @@ def render_srg_index(srgs: dict, out_path: str) -> None:
 
 
 def render_srg_details(srgs: dict, out_path: str) -> None:
-    for srg_id in srgs.keys():
+    for srg_id in tqdm(srgs.keys(), desc="Rendering SRG details", unit="page"):
         controls = srgs[srg_id]
         full_out_path = os.path.join(out_path, "srgs", srg_id)
         os.makedirs(full_out_path, exist_ok=True)
