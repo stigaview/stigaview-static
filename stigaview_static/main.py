@@ -11,10 +11,11 @@ from tqdm.auto import tqdm
 from stigaview_static import html_output, import_stig, json_output, models
 
 
-def _prep_models():
-    models.Stig.update_forward_refs()
-    models.Control.update_forward_refs()
+def _prep_models() -> None:
     logging.info("Preparing models")
+    models.Stig.model_rebuild()
+    models.Control.model_rebuild()
+
 
 def _log_level_type(value: str) -> int:
     try:
