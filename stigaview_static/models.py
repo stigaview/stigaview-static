@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import pathlib
-import sys
 import tomllib
-from typing import List
+from typing import Dict, List
 
 from pydantic import BaseModel
 
@@ -82,7 +82,7 @@ class Product(BaseModel):
         for product in products_path.iterdir():
             config_path = product.joinpath("product.toml")
             if not config_path.exists():
-                sys.stderr.write(
+                logging.error(
                     f"Unable to find config for {product.name} at {str(config_path.absolute())}"
                 )
                 exit(5)
@@ -115,3 +115,16 @@ class Product(BaseModel):
     def latest_stig(self) -> Stig:
         self.sort_stigs()
         return self.stigs[-1]
+
+
+class ProductConfig(BaseModel):
+    full_name: str
+    short_name: str
+    stigs: Dict[str, Dict[str, datetime.date]]
+
+
+class StigAViewConfig(BaseModel):
+    title: str
+    site_path: str
+    products_path: str
+    use_search: bool
