@@ -27,7 +27,8 @@ def _log_level_type(value: str) -> int:
     except AttributeError:
         raise argparse.ArgumentTypeError(f"Invalid log level: {value}")
 
-def parse_args() -> argparse.Namespace:
+
+def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Create the STIG A View site from STIG XML"
     )
@@ -59,10 +60,10 @@ def load_config(path: str) -> dict:
     with open(path) as f:
         content = f.read()
         data = tomllib.loads(content)
-        return data
+        return models.StigAViewConfig(**data).model_dump()
 
 
-def main():
+def main() -> None:
     start_time = datetime.datetime.now(datetime.timezone.utc)
     args = _parse_args()
     logging.basicConfig(
@@ -82,15 +83,19 @@ def main():
     logging.info(f"This script took {endtime-start_time}")
 
 
-def process_product(
-    product: models.Product, product_path: str, config: dict
-) -> tuple[models.Product, dict[str, list]]:
-    product_path = pathlib.Path(product_path)
-    product_config_path = product_path.joinpath("product.toml")
+def _load_product_config(product_config_path: pathlib.Path) -> dict:
     with open(product_config_path, "r") as f:
         product_config = tomllib.loads(f.read())
-    stig_files = product_path.glob("v*.xml")
-    srgs = dict[str, list[models.Control]]
+        return models.ProductConfig(**product_config).model_dump()
+
+
+def process_product(
+    product: models.Product, product_path: pathlib.Path, pbar
+) -> tuple[models.Product, dict[str, list]]:
+    product_config_path = product_path.joinpath("product.toml")
+    product_config = _load_product_config(product_config_path)
+    stig_files = list(product_path.glob("v*.xml"))
+    srgs: dict[str, list[models.Control]] = dict()
     for file in stig_files:
         if file.name.startswith("skip"):
             continue

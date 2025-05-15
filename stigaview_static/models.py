@@ -4,7 +4,7 @@ import datetime
 import logging
 import pathlib
 import tomllib
-from typing import List
+from typing import Dict, List
 
 from pydantic import BaseModel
 
@@ -115,3 +115,16 @@ class Product(BaseModel):
     def latest_stig(self) -> Stig:
         self.sort_stigs()
         return self.stigs[-1]
+
+
+class ProductConfig(BaseModel):
+    full_name: str
+    short_name: str
+    stigs: Dict[str, Dict[str, datetime.date]]
+
+
+class StigAViewConfig(BaseModel):
+    title: str
+    site_path: str
+    products_path: str
+    use_search: bool
