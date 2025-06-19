@@ -8,6 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 from tqdm import tqdm
 
 from stigaview_static import models
+from stigaview_static.json_output import render_json_control
 from stigaview_static.utils import get_config, get_git_revision_short_hash
 
 
@@ -30,6 +31,7 @@ def render_product(product: models.Product, out_path: str):
         real_out_path = render_stig_detail(out_product, product, stig)
         for control in stig.controls:
             render_control(control, real_out_path)
+            render_json_control(control, out_path)
     _copy_latest_stig(out_product, product)
 
 

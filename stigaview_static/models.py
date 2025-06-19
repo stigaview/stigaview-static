@@ -44,6 +44,27 @@ class Control(BaseModel):
     def url(self) -> str:
         return f"{self.stig.url}/{self.disa_stig_id}"
 
+    @property
+    def search_primary_key(self) -> str:
+        return f"{self.stig.product.short_name}-{self.stig.short_version}-{self.disa_stig_id}"
+
+    def to_search_json(self) -> Dict[str, str | List[str]]:
+        return {
+            "id": self.search_primary_key,
+            "title": self.title,
+            "description": self.description,
+            "fix": self.fix,
+            "check": self.check,
+            "cci": self.cci,
+            "stig": self.stig.short_version,
+            "severity": self.severity,
+            "path": self.url,
+            "srg": self.srg.srg_id,
+            "vulnerability_id": self.vulnerability_id,
+            "release_date": self.stig.release_date.strftime("%Y-%m-%d"),
+            "disa_stig_id": self.disa_stig_id,
+        }
+
 
 class Stig(BaseModel):
     release: int
