@@ -285,7 +285,7 @@ async function initializeDropdowns() {
     try {
         // Get all available products and their STIG versions
         const productStigPromise =  loadProductStigMap();
-        const productPromise =  loadProductMap();
+        const productPromise = loadProductMap();
 
         const [productMap, productStigMap] = await Promise.all(
             [productPromise, productStigPromise]

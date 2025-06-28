@@ -26,4 +26,4 @@ def render_json_control(control: models.Control, real_out_path: str):
     if not out_path.exists():
         out_path.mkdir(parents=True)
     filename = out_path.joinpath(f"{control.search_primary_key}.json")
-    filename.write_text(json.dumps(control.to_search_json()))
+    filename.write_text(json.dumps(control.to_search_json(), indent=0))

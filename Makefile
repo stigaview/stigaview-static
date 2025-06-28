@@ -13,7 +13,7 @@ endif
 
 OUT = out
 
-.PHONY: clean build copy_assets minify_static sitemap
+.PHONY: all clean build copy_assets minify_static sitemap
 
 all: build copy_assets sitemap
 
