@@ -23,9 +23,9 @@ def _log_level_type(value: str) -> int:
         # getLevelName returns the string if not found, so check if it's an integer
         if isinstance(level, int):
             return level
-        raise argparse.ArgumentTypeError(f"Invalid log level: {value}")
+        raise argparse.ArgumentTypeError(f"Invalid log level: {value}") from None
     except AttributeError:
-        raise argparse.ArgumentTypeError(f"Invalid log level: {value}")
+        raise argparse.ArgumentTypeError(f"Invalid log level: {value}") from None
 
 
 def _parse_args() -> argparse.Namespace:
@@ -55,7 +55,7 @@ def load_config(path: str) -> dict:
     logging.info("Loading global config")
     if not os.path.exists(path):
         logging.error(f"No such file: {path}")
-        exit(3)
+        sys.exit(3)
     os.environ.setdefault("STIGAVIEW_CONFIG", path)
     with open(path) as f:
         content = f.read()
