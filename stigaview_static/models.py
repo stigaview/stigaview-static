@@ -51,6 +51,7 @@ class Control(BaseModel):
     def to_search_json(self) -> Dict[str, str | List[str]]:
         return {
             "id": self.search_primary_key,
+            "product": self.stig.product.short_name,
             "title": self.title,
             "description": self.description,
             "fix": self.fix,

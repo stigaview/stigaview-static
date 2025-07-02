@@ -15,7 +15,7 @@ OUT = out
 
 .PHONY: all clean build copy_assets minify_static sitemap
 
-all: build copy_assets sitemap
+all: build copy_assets minify_static sitemap
 
 build:
 	@$(RM) -rf $(OUT)
