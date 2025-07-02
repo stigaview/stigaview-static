@@ -29,10 +29,10 @@ def chunk_list(lst: List, chunk_size: int) -> Generator[List, None, None]:
 
 def main():
     if not SEARCH_HOST:
-        print("Please set the environment variable SEARCH_MASTER_KEY", file=sys.stderr)
+        print("Please set the environment variable SEARCH_HOST", file=sys.stderr)
         sys.exit(1)
     if not MASTER_KEY:
-        print("Please set the environment variable SEARCH_HOST", file=sys.stderr)
+        print("Please set the environment variable SEARCH_MASTER_KEY", file=sys.stderr)
         sys.exit(1)
     args = _get_arg_parser().parse_args()
     json_output_path = pathlib.Path(args.json_output_path)
