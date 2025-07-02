@@ -3,7 +3,8 @@ import argparse
 import glob
 import pathlib
 
-import minify_html.minify_html
+from csscompressor import compress
+from rjsmin import jsmin
 
 
 def _parse_args() -> argparse.Namespace:
@@ -23,16 +24,14 @@ def main() -> int:
     css_files = glob.glob(root_dir=css_path, pathname="*.css")
     for file in css_files:
         css_file = css_path.joinpath(file)
-        minifed = minify_html.minify(css_file.read_text(), minify_css=True)
-        css_file.write_text(minifed)
+        minified = compress(css_file.read_text())
+        css_file.write_text(minified)
     js_path = output_path.joinpath("static", "js")
     js_files = glob.glob(root_dir=js_path, pathname="*.js")
     for file in js_files:
         js_file = js_path.joinpath(file)
-        minifed = minify_html.minify(
-            js_file.read_text(), minify_js=True, keep_comments=False
-        )
-        js_file.write_text(minifed)
+        minified = jsmin(js_file.read_text())
+        js_file.write_text(minified)
     return 0
 
 
