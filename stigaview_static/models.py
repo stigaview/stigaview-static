@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 import datetime
+import logging
 import pathlib
-import sys
 import tomllib
-from typing import List
+from typing import Dict, List
 
 from pydantic import BaseModel
 
@@ -44,6 +44,28 @@ class Control(BaseModel):
     def url(self) -> str:
         return f"{self.stig.url}/{self.disa_stig_id}"
 
+    @property
+    def search_primary_key(self) -> str:
+        return f"{self.stig.product.short_name}-{self.stig.short_version}-{self.disa_stig_id}"
+
+    def to_search_json(self) -> Dict[str, str | List[str]]:
+        return {
+            "id": self.search_primary_key,
+            "product": self.stig.product.short_name,
+            "title": self.title,
+            "description": self.description,
+            "fix": self.fix,
+            "check": self.check,
+            "cci": self.cci,
+            "stig": self.stig.short_version,
+            "severity": self.severity,
+            "path": self.url,
+            "srg": self.srg.srg_id,
+            "vulnerability_id": self.vulnerability_id,
+            "release_date": self.stig.release_date.strftime("%Y-%m-%d"),
+            "disa_stig_id": self.disa_stig_id,
+        }
+
 
 class Stig(BaseModel):
     release: int
@@ -82,7 +104,7 @@ class Product(BaseModel):
         for product in products_path.iterdir():
             config_path = product.joinpath("product.toml")
             if not config_path.exists():
-                sys.stderr.write(
+                logging.error(
                     f"Unable to find config for {product.name} at {str(config_path.absolute())}"
                 )
                 exit(5)
@@ -115,3 +137,16 @@ class Product(BaseModel):
     def latest_stig(self) -> Stig:
         self.sort_stigs()
         return self.stigs[-1]
+
+
+class ProductConfig(BaseModel):
+    full_name: str
+    short_name: str
+    stigs: Dict[str, Dict[str, datetime.date]]
+
+
+class StigAViewConfig(BaseModel):
+    title: str
+    site_path: str
+    products_path: str
+    use_search: bool

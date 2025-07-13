@@ -1,3 +1,4 @@
 title = "STIG A View Static"
 site_path = "/"
 products_path = "products"
+use_search = true

@@ -1,19 +1,34 @@
 import argparse
 import datetime
+import logging
 import os
 import pathlib
 import sys
 import tomllib
 
-from stigaview_static import html_output, import_stig, models
+from tqdm.auto import tqdm
+
+from stigaview_static import html_output, import_stig, json_output, models
 
 
-def _prep_models():
-    models.Stig.update_forward_refs()
-    models.Control.update_forward_refs()
+def _prep_models() -> None:
+    logging.info("Preparing models")
+    models.Stig.model_rebuild()
+    models.Control.model_rebuild()
 
 
-def parse_args() -> argparse.Namespace:
+def _log_level_type(value: str) -> int:
+    try:
+        level = logging.getLevelName(value.upper())
+        # getLevelName returns the string if not found, so check if it's an integer
+        if isinstance(level, int):
+            return level
+        raise argparse.ArgumentTypeError(f"Invalid log level: {value}") from None
+    except AttributeError:
+        raise argparse.ArgumentTypeError(f"Invalid log level: {value}") from None
+
+
+def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Create the STIG A View site from STIG XML"
     )
@@ -30,42 +45,57 @@ def parse_args() -> argparse.Namespace:
         help="Path to config file, defaults to stigaview.toml",
         default="stigaview.toml",
     )
+    parser.add_argument(
+        "-l", "--log-level", help="Log level", default="DEBUG", type=_log_level_type
+    )
     return parser.parse_args()
 
 
 def load_config(path: str) -> dict:
+    logging.info("Loading global config")
     if not os.path.exists(path):
-        sys.stderr.write(f"Config file not found: {path}\n")
-        exit(3)
+        logging.error(f"No such file: {path}")
+        sys.exit(3)
+    os.environ.setdefault("STIGAVIEW_CONFIG", path)
     with open(path) as f:
         content = f.read()
         data = tomllib.loads(content)
-        return data
+        return models.StigAViewConfig(**data).model_dump()
 
 
-def main():
-    start_time = datetime.datetime.now()
+def main() -> None:
+    start_time = datetime.datetime.now(datetime.timezone.utc)
+    args = _parse_args()
+    logging.basicConfig(
+        level=logging.getLevelName(args.log_level),
+        format="%(asctime)s - %(levelname)s - %(message)s",
+        handlers=[logging.StreamHandler(sys.stderr)],
+    )
     _prep_models()
-    args = parse_args()
     config = load_config(args.config)
     products, srg_dict = process_products(config, args.input)
     html_output.render_stig_index(products, args.out_dir)
     html_output.render_srg_index(srg_dict, args.out_dir)
     html_output.write_index(products, args.out_dir)
     html_output.write_products(products, args.out_dir)
-    endtime = datetime.datetime.now()
-    print(f"This script took {endtime-start_time}")
+    json_output.write_product_stig_map(products, args.out_dir)
+    endtime = datetime.datetime.now(datetime.timezone.utc)
+    logging.info(f"This script took {endtime-start_time}")
+
+
+def _load_product_config(product_config_path: pathlib.Path) -> dict:
+    with open(product_config_path, "r") as f:
+        product_config = tomllib.loads(f.read())
+        return models.ProductConfig(**product_config).model_dump()
 
 
 def process_product(
-    product: models.Product, product_path: str, config: dict
+    product: models.Product, product_path: pathlib.Path, pbar
 ) -> tuple[models.Product, dict[str, list]]:
-    product_path = pathlib.Path(product_path)
     product_config_path = product_path.joinpath("product.toml")
-    with open(product_config_path, "r") as f:
-        product_config = tomllib.loads(f.read())
-    stig_files = product_path.glob("v*.xml")
-    srgs = dict[str, list[models.Control]]
+    product_config = _load_product_config(product_config_path)
+    stig_files = list(product_path.glob("v*.xml"))
+    srgs: dict[str, list[models.Control]] = dict()
     for file in stig_files:
         if file.name.startswith("skip"):
             continue
@@ -75,10 +105,21 @@ def process_product(
                 f"{product.full_name} doesn't have a config for {short_version}"
             )
         stig_release_date = product_config["stigs"][short_version]["release_date"]
-        stig, srgs = import_stig.import_stig(file, stig_release_date, product)
+        stig, file_srgs = import_stig.import_stig(file, stig_release_date, product)
         product.stigs.append(stig)
-        srgs.update(srgs)
+        srgs.update(file_srgs)
+        pbar.update(1)
     return product, srgs
+
+
+def _get_total_files(input_path, products):
+    # Count total files to process
+    total_files = 0
+    for product in products:
+        product_path = pathlib.Path(input_path) / product.short_name
+        if product_path.exists():
+            total_files += len(list(product_path.glob("v*.xml")))
+    return total_files
 
 
 def process_products(
@@ -87,19 +128,21 @@ def process_products(
     products = models.Product.get_products(config)
     result = list()
     srgs_dict = dict()
-    for product in products:
-        product_path = os.path.join(input_path, product.short_name)
-        if not os.path.exists(product_path):
-            sys.stderr.write(
-                f"Unable to find path for {product.short_name} at {product_path}\n"
-            )
-            exit(4)
-        product, srgs = process_product(product, product_path, config)
-        for srg, controls in srgs.items():
-            if srg not in srgs_dict.keys():
-                srgs_dict[srg] = controls
-            else:
-                for control in controls:
-                    srgs_dict[srg].append(control)
-        result.append(product)
+    total_files = _get_total_files(input_path, products)
+    with tqdm(total=total_files, desc="Processing all STIG files", unit="file") as pbar:
+        for product in products:
+            product_path = pathlib.Path(input_path) / product.short_name
+            if not product_path.exists():
+                logging.error(
+                    f"Unable to find path for {product.short_name} at {product_path}"
+                )
+                exit(4)
+            product, srgs = process_product(product, product_path, pbar)
+            for srg, controls in srgs.items():
+                if srg not in srgs_dict.keys():
+                    srgs_dict[srg] = controls
+                else:
+                    for control in controls:
+                        srgs_dict[srg].append(control)
+            result.append(product)
     return result, srgs_dict
