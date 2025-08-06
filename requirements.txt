@@ -3,7 +3,7 @@ pydantic==2.9.2
 black==25.1.0
 pre-commit==4.2.0
 isort==6.0.1
-mypy==1.17.0
+mypy==1.17.1
 minify_html==0.16.4
 tqdm==4.67.1
 rjsmin==1.2.4
