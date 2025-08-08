@@ -1,0 +1,6 @@
+full_name = "Security Requirements Guide - Kubernetes"
+short_name = "srg-kubernetes"
+
+[stigs]
+[stigs.v2r4]
+release_date = 2025-08-07
