@@ -25,6 +25,14 @@ You will need to install GNU sed.
 $ brew install gnu-sed
 ```
 
+Next, install the Python dependencies.
+
+```
+$ python -m venv .venv
+$ source .venv/bin/activate
+$ pip install -r requirements.txt
+```
+
 To build the site run
 ```
 $ make
@@ -39,4 +47,4 @@ See COPYING for more details.
 The STIG content is the public domain.
 
 This program uses code from the Django version of STIG-A-View.
-Content is used by permission.
+This code is used by permission.

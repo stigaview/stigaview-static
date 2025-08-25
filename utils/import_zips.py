@@ -20,7 +20,10 @@ disa_to_shortname = {
     "RHEL_8": "rhel8",
     "RHEL_9": "rhel9",
     "Apple_iOS-iPadOS_18": "ios18",
+    "Apple_macOS_13": "macos13",
+    "Apple_macOS_14": "macos14",
     "Apple_macOS_15": "macos15",
+    "CAN_Ubuntu_20-04_LTS": "ubuntu2004",
     "CAN_Ubuntu_22-04_LTS": "ubuntu2204",
     "CAN_Ubuntu_24-04_LTS": "ubuntu2404",
     "CL_AlmaLinux_OS_9": "alma9",
@@ -28,12 +31,18 @@ disa_to_shortname = {
     "MS_Windows_11": "win11",
     "Oracle_Linux_7": "ol7",
     "Oracle_Linux_8": "ol8",
+    "Oracle_Linux_9": "ol9",
     "SLES_15": "sle15",
     "SLES_12": "sle12",
     "MS_Windows_Server_2016": "winserv2016",
     "MS_Windows_Server_2019": "winserv2019",
     "MS_Windows_Server_2022": "winserv2022",
     "Container_Platform": "srg-ctr",
+    "Mainframe_Product": "srg-mainframe",
+    "RH_OpenShift_Container_Platform_4-12": "ocp",
+    "RH_OpenShift_Container_Platform_4-x": "ocp",
+    "GPOS": "srg-gpos",
+    "Kubernetes": "srg-kubernetes",
 }
 
 
@@ -47,13 +56,24 @@ def main() -> int:
         full_zip_path = download_root / current_zip
         with zipfile.ZipFile(full_zip_path, "r") as z:
             product_regex = r"U_(?P<product>.+)_V(?P<version>\d+)R(?P<release>\d+)_(?P<type>STIG|SRG)\.zip"
-            matches = re.matches = re.search(product_regex, current_zip).groupdict()
+            matches = re.matches = re.search(product_regex, current_zip)
+            if not matches:
+                print(
+                    f"skipping {full_zip_path} since the file name doesn't match the normal pattern"
+                )
+                continue
+            matches = matches.groupdict()
             version = matches["version"]
             release = matches["release"]
             short_version = f"v{version}r{release}"
             for file_info in z.infolist():
                 if file_info.filename.endswith(".xml"):
                     with z.open(file_info) as file:
+                        if matches["product"] not in disa_to_shortname:
+                            print(
+                                f"skipping {matches['product']} as it is not in known products"
+                            )
+                            continue
                         short_name = disa_to_shortname[matches["product"]]
                         filename = f"{short_version}.xml"
                         output_path = root / "products" / short_name / filename
