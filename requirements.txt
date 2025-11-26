@@ -1,7 +1,7 @@
 Jinja2==3.1.6
 pydantic==2.9.2
 black==25.9.0
-pre-commit==4.4.0
+pre-commit==4.5.0
 isort==7.0.0
 mypy==1.18.2
 minify_html==0.18.1
