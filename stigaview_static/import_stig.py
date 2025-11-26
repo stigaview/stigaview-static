@@ -115,6 +115,6 @@ def _get_stig_version(stig_path):
 
 
 def _get_root_from_xml_path(stig_path) -> ET.ElementTree:
-    with open(stig_path) as stig_file:
+    with open(stig_path, encoding="utf-8") as stig_file:
         root = ET.ElementTree(ET.fromstring(stig_file.read()))
     return root
