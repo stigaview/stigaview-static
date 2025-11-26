@@ -4,7 +4,7 @@ black==25.9.0
 pre-commit==4.4.0
 isort==7.0.0
 mypy==1.18.2
-minify_html==0.16.4
+minify_html==0.18.1
 tqdm==4.67.1
 rjsmin==1.2.5
 csscompressor==0.9.5
