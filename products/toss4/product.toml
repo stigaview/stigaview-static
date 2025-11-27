@@ -1,0 +1,6 @@
+full_name = "Tri-Lab Operating System Stack"
+short_name = "toss4"
+
+[stigs]
+[stigs.v2r3]
+release_date = 2025-11-26

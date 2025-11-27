@@ -1,0 +1,6 @@
+full_name = "Security Requirements Guide - API"
+short_name = "srg-API"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2025-11-25
