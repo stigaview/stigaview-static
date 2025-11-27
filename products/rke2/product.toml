@@ -1,0 +1,6 @@
+full_name = "Rancher RKE2"
+short_name = "rke2"
+
+[stigs]
+[stigs.v2r4]
+release_date = 2025-11-26

@@ -43,6 +43,9 @@ disa_to_shortname = {
     "RH_OpenShift_Container_Platform_4-x": "ocp",
     "GPOS": "srg-gpos",
     "Kubernetes": "srg-kubernetes",
+    "TOSS_4": "toss4",
+    "API": "srg-api",
+    "RGS_RKE2": "rke2",
 }
 
 
