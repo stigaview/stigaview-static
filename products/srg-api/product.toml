@@ -1,5 +1,5 @@
 full_name = "Security Requirements Guide - API"
-short_name = "srg-API"
+short_name = "srg-api"
 
 [stigs]
 [stigs.v1r1]
