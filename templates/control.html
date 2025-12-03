@@ -6,7 +6,7 @@
   <p>
   <b>STIG ID:</b> {{ control.disa_stig_id }} &nbsp;|&nbsp;
   <b>SRG: </b><a href="{{ control.srg.url }}">{{ control.srg.srg_id }}</a>&nbsp;|&nbsp;
-  <b>Severity: </b>{{ control.severity }}&nbsp;|&nbsp;
+  <b>Severity: </b>{{ control.severity }} ({{ control.severity | severity_to_cat }}) &nbsp;|&nbsp;
   <b>CCI: </b>{{ ",".join(control.cci) }}&nbsp;|&nbsp;
   <b>Vulnerability Id:</b> V-{{ control.vulnerability_id }}
   </p>

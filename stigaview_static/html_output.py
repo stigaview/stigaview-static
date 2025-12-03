@@ -12,9 +12,16 @@ from stigaview_static.json_output import render_json_control
 from stigaview_static.utils import get_config, get_git_revision_short_hash
 
 
+def _severity_to_cat(severity: str) -> str:
+    """Convert severity level to DISA CAT level."""
+    mapping = {"high": "CAT I", "medium": "CAT II", "low": "CAT III"}
+    return mapping.get(severity.lower(), severity)
+
+
 def render_template(template: str, out_path: str, **kwargs):
     file_loader = FileSystemLoader("templates")
     env = Environment(loader=file_loader)
+    env.filters["severity_to_cat"] = _severity_to_cat
     template = env.get_template(template)
     config = get_config()
     context = kwargs | config
