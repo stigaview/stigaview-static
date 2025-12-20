@@ -22,7 +22,7 @@
         <td><a href="{{ control.url }}">{{ control.disa_stig_id }}</a></td>
         <td><a href="{{ control.stig.url }}">{{ control.stig.short_version }}</a></td>
         <td>{{ control.title }}</td>
-        <td><a href="{{ control.url }}">{{ control.stig.product.name }}</a></td>
+        <td><a href="{{ control.stig.product.url }}">{{ control.stig.product.full_name }}</a></td>
       </tr>
     {% endfor %}
     </tbody>
