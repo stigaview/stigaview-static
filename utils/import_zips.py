@@ -70,13 +70,13 @@ def main() -> int:
             release = matches_dict["release"]
             product = matches_dict["product"]
             short_version = f"v{version}r{release}"
+            if product not in disa_to_shortname:
+                print(f"skipping {product} as it is not in known products")
+                continue
+            short_name = disa_to_shortname[product]
             for file_info in z.infolist():
                 if file_info.filename.endswith(".xml"):
                     with z.open(file_info) as file:
-                        if product not in disa_to_shortname:
-                            print(f"skipping {product} as it is not in known products")
-                            continue
-                        short_name = disa_to_shortname[product]
                         filename = f"{short_version}.xml"
                         output_path = root / "products" / short_name / filename
                         if not output_path.exists():
