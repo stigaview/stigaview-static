@@ -59,25 +59,24 @@ def main() -> int:
         full_zip_path = download_root / current_zip
         with zipfile.ZipFile(full_zip_path, "r") as z:
             product_regex = r"U_(?P<product>.+)_V(?P<version>\d+)R(?P<release>\d+)_(?P<type>STIG|SRG)\.zip"
-            matches = re.matches = re.search(product_regex, current_zip)
-            if not matches:
+            product_regex_matches = re.match(product_regex, current_zip)
+            if not product_regex_matches:
                 print(
                     f"skipping {full_zip_path} since the file name doesn't match the normal pattern"
                 )
                 continue
-            matches = matches.groupdict()
-            version = matches["version"]
-            release = matches["release"]
+            matches_dict = product_regex_matches.groupdict()
+            version = matches_dict["version"]
+            release = matches_dict["release"]
+            product = matches_dict["product"]
             short_version = f"v{version}r{release}"
+            if product not in disa_to_shortname:
+                print(f"skipping {product} as it is not in known products")
+                continue
+            short_name = disa_to_shortname[product]
             for file_info in z.infolist():
                 if file_info.filename.endswith(".xml"):
                     with z.open(file_info) as file:
-                        if matches["product"] not in disa_to_shortname:
-                            print(
-                                f"skipping {matches['product']} as it is not in known products"
-                            )
-                            continue
-                        short_name = disa_to_shortname[matches["product"]]
                         filename = f"{short_version}.xml"
                         output_path = root / "products" / short_name / filename
                         if not output_path.exists():
@@ -101,4 +100,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise sys.exit(main())
+    raise SystemExit(main())
