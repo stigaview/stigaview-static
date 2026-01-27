@@ -1,0 +1,6 @@
+full_name = "Amazon Linux 2023"
+short_name = "al2023"
+
+[stigs]
+[stigs.v1r2]
+release_date = 2026-01-22
