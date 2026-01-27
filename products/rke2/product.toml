@@ -4,3 +4,5 @@ short_name = "rke2"
 [stigs]
 [stigs.v2r4]
 release_date = 2025-11-26
+[stigs.v2r5]
+release_date = 2026-01-23
