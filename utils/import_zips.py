@@ -46,6 +46,7 @@ disa_to_shortname = {
     "TOSS_4": "toss4",
     "API": "srg-api",
     "RGS_RKE2": "rke2",
+    "Amazon_Linux_2023": "al2023",
 }
 
 
