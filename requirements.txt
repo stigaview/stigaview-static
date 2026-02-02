@@ -5,6 +5,6 @@ pre-commit==4.5.1
 isort==7.0.0
 mypy==1.19.1
 minify_html==0.18.1
-tqdm==4.67.1
+tqdm==4.67.2
 rjsmin==1.2.5
 csscompressor==0.9.5
