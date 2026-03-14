@@ -1,5 +1,5 @@
 full_name = "Security Requirements Guide - Domain Name Service"
-short_name = "srg-DNS"
+short_name = "srg-dns"
 
 [stigs]
 [stigs.v4r2]
