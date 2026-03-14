@@ -37,6 +37,7 @@ disa_to_shortname = {
     "MS_Windows_Server_2016": "winserv2016",
     "MS_Windows_Server_2019": "winserv2019",
     "MS_Windows_Server_2022": "winserv2022",
+    "MS_Windows_Server_2025": "winserv2025",
     "Container_Platform": "srg-ctr",
     "Mainframe_Product": "srg-mainframe",
     "RH_OpenShift_Container_Platform_4-12": "ocp",
@@ -47,6 +48,8 @@ disa_to_shortname = {
     "API": "srg-api",
     "RGS_RKE2": "rke2",
     "Amazon_Linux_2023": "al2023",
+    "Web_Server": "srg-web-server",
+    "Domain_Name_System": "srg-dns",
 }
 
 
