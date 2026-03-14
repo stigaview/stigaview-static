@@ -14,7 +14,7 @@ nav a, nav a:visited {
     color: #f2f2f2;
     text-align: center;
     padding: 0.5em;
-    text-decoration: none
+    text-decoration: none;
 }
 
 nav a:hover {
@@ -47,7 +47,6 @@ nav li {
 
 table {
     border-collapse: collapse;
-    border: black 1px;
 }
 
 th, td {
@@ -78,11 +77,6 @@ th, td {
 .btn:hover {
     background-color: #1d4ed8;
     border-color: #1e40af;
-}
-
-.btn:focus {
-    outline: 2px solid transparent;
-    outline-offset: 2px;
 }
 
 .btn:focus {
@@ -313,7 +307,7 @@ em {
     }
 
     .filter-group label {
-        white-space: wrap;
+        white-space: normal;
     }
 
     .filters-container {
@@ -340,7 +334,7 @@ em {
     }
 
     a:visited {
-        color: #5a04e0;
+        color: #b388ff;
     }
 
     th,
@@ -487,4 +481,19 @@ em {
 
 #stig_id_column {
     width: 8em;
+}
+
+.alert {
+    border-radius: 0.25rem;
+    padding: 0.75em;
+}
+
+.alert-yellow {
+    background-color: lab(83.2664 8.65132 106.895);
+    border: 1px solid lab(32.3865 21.1273 38.5959);
+    color: oklch(25% 0.05 50);
+}
+
+.alert-yellow a {
+    color: oklch(35.9% 0.144 278.697);
 }
