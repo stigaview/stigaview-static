@@ -6,3 +6,5 @@ short_name = "srg-ctr"
 release_date = 2025-01-28
 [stigs.v2r3]
 release_date = 2025-08-07
+[stigs.v2r4]
+release_date = 2026-01-08
