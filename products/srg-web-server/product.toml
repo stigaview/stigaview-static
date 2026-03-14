@@ -1,0 +1,6 @@
+full_name = "Security Requirements Guide - Web Server"
+short_name = "srg-web-server"
+
+[stigs]
+[stigs.v4r4]
+release_date = 2026-01-08

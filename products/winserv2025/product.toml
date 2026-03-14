@@ -1,0 +1,6 @@
+full_name = "Microsoft Windows Server 2025"
+short_name = "winserv2025"
+
+[stigs]
+[stigs.v1r1]
+release_date = 2026-02-27
