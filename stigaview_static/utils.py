@@ -1,3 +1,4 @@
+import functools
 import os
 import pathlib
 import subprocess
@@ -11,6 +12,7 @@ def update_dict_list(d: dict, key: str, value: object) -> dict:
     return d
 
 
+@functools.cache
 def get_git_revision_short_hash() -> str:
     return (
         subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
