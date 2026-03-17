@@ -19,6 +19,7 @@ def _parse_args() -> argparse.Namespace:
 disa_to_shortname = {
     "RHEL_8": "rhel8",
     "RHEL_9": "rhel9",
+    "RHEL_10": "rhel10",
     "Apple_iOS-iPadOS_18": "ios18",
     "Apple_macOS_13": "macos13",
     "Apple_macOS_14": "macos14",
