@@ -1,0 +1,7 @@
+full_name = "Red Hat Enterprise Linux 10"
+short_name = "rhel10"
+
+[stigs]
+
+[stigs.v1r1]
+release_date = 2026-03-17
