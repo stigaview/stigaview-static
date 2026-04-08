@@ -4,3 +4,5 @@ short_name = "al2023"
 [stigs]
 [stigs.v1r2]
 release_date = 2026-01-22
+[stigs.v1r3]
+release_date = 2026-04-07

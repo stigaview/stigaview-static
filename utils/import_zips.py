@@ -24,6 +24,8 @@ disa_to_shortname = {
     "Apple_macOS_13": "macos13",
     "Apple_macOS_14": "macos14",
     "Apple_macOS_15": "macos15",
+    "Apple_macOS_26": "macos26",
+    "Apple_iOS-iPadOS_26": "ios26",
     "CAN_Ubuntu_20-04_LTS": "ubuntu2004",
     "CAN_Ubuntu_22-04_LTS": "ubuntu2204",
     "CAN_Ubuntu_24-04_LTS": "ubuntu2404",
