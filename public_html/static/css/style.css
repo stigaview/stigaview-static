@@ -525,6 +525,32 @@ html[data-theme="dark"] {
 html[data-theme="dark"] #theme-toggle .icon-moon { display: inline; }
 html[data-theme="dark"] #theme-toggle .icon-sun  { display: none; }
 
+.recent-visits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.recent-visits-list li a {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.recent-visits-list li a:hover {
+    text-decoration: underline;
+}
+
+html[data-theme="dark"] .recent-visits-list li a {
+    border-color: #555;
+}
+
 .error_code {
     font-size: 250px;
     display: flex;
