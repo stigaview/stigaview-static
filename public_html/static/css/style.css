@@ -353,7 +353,7 @@ em {
     color: #555;
 }
 
-@media (prefers-color-scheme: dark) {
+html[data-theme="dark"] {
     body {
         color: #ffffff;
         background-color: #121212;
@@ -518,6 +518,12 @@ em {
         color: #aaa;
     }
 }
+
+#theme-toggle .icon-moon { display: none; }
+#theme-toggle .icon-sun  { display: inline; }
+
+html[data-theme="dark"] #theme-toggle .icon-moon { display: inline; }
+html[data-theme="dark"] #theme-toggle .icon-sun  { display: none; }
 
 .error_code {
     font-size: 250px;
