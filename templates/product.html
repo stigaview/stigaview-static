@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 
 {% block title %}{{ product.full_name }}{% endblock %}
+{% block breadcrumbs %}
+<div class="breadcrumb-nav">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/products">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ product.full_name }}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
 {% block content %}
 <h1>{{ product.full_name }} ({{ product.short_name }})</h1>
 <a href="{{ product.url }}/latest">View the latest STIG</a>
