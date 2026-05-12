@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 
 {% block title %}{{ control.disa_stig_id }} - {{ control.stig.short_version }}{% endblock %}
+{% block breadcrumbs %}
+<div class="breadcrumb-nav">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/products">Products</a></li>
+            <li class="breadcrumb-item"><a href="{{ control.stig.product.url }}">{{ control.stig.product.full_name }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ control.stig.url }}">{{ control.stig.short_version }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ control.disa_stig_id }}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
 {% block content %}
     {% if control.stig.product.latest_stig.short_version != control.stig.short_version %}
         <div class="alert alert-yellow">
