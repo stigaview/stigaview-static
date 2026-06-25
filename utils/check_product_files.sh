@@ -2,7 +2,7 @@
 
 # Check if oscap is installed
 if ! command -v oscap &> /dev/null; then
-    echo "ERROR: oscap is not installed. Please install the openscap-scanner package."
+    echo "ERROR: oscap is not installed. Please install the openscap-scanner package." >&2
     exit 1
 fi
 
@@ -14,8 +14,8 @@ check_product_xml_files() {
     while IFS= read -r -d '' xml_file; do
         echo "Checking: $xml_file"
         if ! output=$(oscap info "$xml_file" 2>&1); then
-            echo "ERROR: oscap info failed for $xml_file"
-            echo "$output"
+            echo "ERROR: oscap info failed for $xml_file" >&2
+            echo "$output" >&2
             failed_files+=("$xml_file")
             exit_code=1
         fi
@@ -23,9 +23,9 @@ check_product_xml_files() {
 
     # Print summary if there were failures
     if [ ${#failed_files[@]} -gt 0 ]; then
-        echo ""
-        echo "Summary: ${#failed_files[@]} file(s) failed validation:"
-        printf '  %s\n' "${failed_files[@]}"
+        echo "" >&2
+        echo "Summary: ${#failed_files[@]} file(s) failed validation:" >&2
+        printf '  %s\n' "${failed_files[@]}" >&2
     fi
 
     return $exit_code
