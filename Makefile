@@ -13,7 +13,7 @@ endif
 
 OUT = out
 
-.PHONY: all clean build copy_assets minify_static sitemap
+.PHONY: all clean build copy_assets minify_static sitemap check-product-files
 
 all: build copy_assets minify_static sitemap
 
@@ -35,3 +35,6 @@ sitemap:
 
 clean:
 	@$(RM) -rf $(OUT)
+
+check-product-files:
+	@bash utils/check_product_files.sh
