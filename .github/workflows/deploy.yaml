@@ -25,7 +25,7 @@ jobs:
 
   check_product_files:
     runs-on: ubuntu-latest
-    container: quay.io/fedora/fedora@sha256:f69eded677c301b72eebbe2c60761f7fcc006294f07ef6719b44da1f73af1d68
+    container: quay.io/fedora/fedora:latest
     steps:
       - name: "Install dependencies"
         run: dnf install -y openscap-scanner make
