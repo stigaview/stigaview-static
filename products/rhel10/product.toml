@@ -5,3 +5,5 @@ short_name = "rhel10"
 
 [stigs.v1r1]
 release_date = 2026-03-17
+[stigs.v1r2]
+release_date = 2026-07-10
