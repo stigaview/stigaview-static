@@ -4,3 +4,5 @@ short_name = "srg-web-server"
 [stigs]
 [stigs.v4r4]
 release_date = 2026-01-08
+[stigs.v4r5]
+release_date = 2026-07-10
