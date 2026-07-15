@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 
 {% block title %}{{ product.full_name }} STIG V{{ stig.version }}R{{ stig.release }}{% endblock %}
+{% block breadcrumbs %}
+<div class="breadcrumb-nav">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/products">Products</a></li>
+            <li class="breadcrumb-item"><a href="{{ product.url }}">{{ product.full_name }}</a></li>
+            <li class="breadcrumb-item"><a href="{{ stig.url }}">{{ stig.short_version }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">One Page</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
 {% block content %}
     <h2>{{ product.full_name }} STIG V{{ stig.version }}R{{ stig.release }}</h2>
     {% if stig.product.latest_stig.short_version != stig.short_version %}

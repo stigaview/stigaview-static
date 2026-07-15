@@ -3,12 +3,12 @@ body {
     margin: 0;
 }
 
-nav {
+.navbar {
     background-color: black;
     overflow: hidden;
 }
 
-nav a, nav a:visited {
+.navbar a, .navbar a:visited {
     float: left;
     display: block;
     color: #f2f2f2;
@@ -17,15 +17,15 @@ nav a, nav a:visited {
     text-decoration: none;
 }
 
-nav a:hover {
+.navbar a:hover {
     text-decoration-line: none;
 }
 
-nav ul {
+.navbar ul {
     display: inline;
 }
 
-nav li {
+.navbar li {
     display: inline;
     padding-left: 5px;
 }
@@ -315,13 +315,51 @@ em {
     }
 }
 
-@media (prefers-color-scheme: dark) {
+.breadcrumb-nav {
+    background-color: #f0f2f5;
+    border-bottom: 1px solid #dde1e7;
+    padding: 0.55rem 2rem;
+    font-size: 0.875rem;
+}
+
+.breadcrumb {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    content: "›";
+    padding: 0 0.45rem;
+    color: #999;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+.breadcrumb-item a,
+.breadcrumb-item a:visited {
+    color: #0062cc;
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-item.active {
+    color: #555;
+}
+
+html[data-theme="dark"] {
     body {
         color: #ffffff;
         background-color: #121212;
     }
 
-    nav {
+    .navbar {
         background-color: rgba(255, 255, 255, 0.1);
     }
 
@@ -461,6 +499,56 @@ em {
         outline-offset: 2px;
         box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
     }
+
+    .breadcrumb-nav {
+        background-color: #1c1c1c;
+        border-bottom-color: #333;
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: #666;
+    }
+
+    .breadcrumb-item a,
+    .breadcrumb-item a:visited {
+        color: #87cefa;
+    }
+
+    .breadcrumb-item.active {
+        color: #aaa;
+    }
+}
+
+#theme-toggle .icon-moon { display: none; }
+#theme-toggle .icon-sun  { display: inline; }
+
+html[data-theme="dark"] #theme-toggle .icon-moon { display: inline; }
+html[data-theme="dark"] #theme-toggle .icon-sun  { display: none; }
+
+.recent-visits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.recent-visits-list li a {
+    display: inline-block;
+    padding: 0.25rem 0.65rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.recent-visits-list li a:hover {
+    text-decoration: underline;
+}
+
+html[data-theme="dark"] .recent-visits-list li a {
+    border-color: #555;
 }
 
 .error_code {
