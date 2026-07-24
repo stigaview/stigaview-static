@@ -1,6 +1,17 @@
 {% extends "base.html" %}
 
 {% block title %}{{ srg_id }} Rules{% endblock %}
+{% block breadcrumbs %}
+<div class="breadcrumb-nav">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/srgs">SRGs</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ srg_id }}</li>
+        </ol>
+    </nav>
+</div>
+{% endblock %}
 {% block content %}
 {% if 'GPOS' in srg_id %}
   <h2><a href="/products/srg-gpos/latest/{{ srg_id }}">{{ srg_id }}</a> Controls</h2>
