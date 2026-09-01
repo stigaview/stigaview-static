@@ -2,7 +2,7 @@ Jinja2==3.1.6
 pydantic==2.12.5
 black==26.5.1
 pre-commit==4.6.2
-isort==8.0.1
+isort==9.0.1
 mypy==1.20.0
 minify_html==0.18.1
 tqdm==4.70.0
