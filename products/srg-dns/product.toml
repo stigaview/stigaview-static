@@ -4,3 +4,5 @@ short_name = "srg-dns"
 [stigs]
 [stigs.v4r2]
 release_date = 2026-01-08
+[stigs.v4r3]
+release_date = 2026-10-05
