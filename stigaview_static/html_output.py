@@ -2,6 +2,7 @@ import logging
 import multiprocessing
 import os.path
 import shutil
+from functools import cache
 
 import minify_html
 from jinja2 import Environment, FileSystemLoader
@@ -18,14 +19,28 @@ def _severity_to_cat(severity: str) -> str:
     return mapping.get(severity.lower(), severity)
 
 
-def render_template(template: str, out_path: str, **kwargs):
-    file_loader = FileSystemLoader("templates")
-    env = Environment(loader=file_loader)
+@cache
+def _get_environment() -> Environment:
+    env = Environment(loader=FileSystemLoader("templates"))
     env.filters["severity_to_cat"] = _severity_to_cat
-    template = env.get_template(template)
-    config = get_config()
-    context = kwargs | config
-    output = template.render(git_sha=get_git_revision_short_hash(), **context)
+    return env
+
+
+@cache
+def _get_template(template_name: str):
+    return _get_environment().get_template(template_name)
+
+
+@cache
+def _get_render_config() -> dict:
+    return get_config()
+
+
+def render_template(template: str, out_path: str, **kwargs):
+    context = kwargs | _get_render_config()
+    output = _get_template(template).render(
+        git_sha=get_git_revision_short_hash(), **context
+    )
     minified = minify_html.minify(output)
     with open(out_path, "w") as fp:
         fp.write(minified)
