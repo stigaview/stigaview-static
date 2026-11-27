@@ -1,6 +1,7 @@
 import argparse
 import datetime
 import logging
+import multiprocessing
 import os
 import pathlib
 import sys
@@ -11,8 +12,9 @@ from tqdm.auto import tqdm
 from stigaview_static import html_output, import_stig, json_output, models
 
 
-def _prep_models() -> None:
-    logging.info("Preparing models")
+def _prep_models(log: bool = True) -> None:
+    if log:
+        logging.info("Preparing models")
     models.Stig.model_rebuild()
     models.Control.model_rebuild()
 
@@ -90,7 +92,7 @@ def _load_product_config(product_config_path: pathlib.Path) -> dict:
 
 
 def process_product(
-    product: models.Product, product_path: pathlib.Path, pbar
+    product: models.Product, product_path: pathlib.Path
 ) -> tuple[models.Product, dict[str, list]]:
     product_config_path = product_path.joinpath("product.toml")
     product_config = _load_product_config(product_config_path)
@@ -108,8 +110,12 @@ def process_product(
         stig, file_srgs = import_stig.import_stig(file, stig_release_date, product)
         product.stigs.append(stig)
         srgs.update(file_srgs)
-        pbar.update(1)
     return product, srgs
+
+
+def _process_product_args(args):
+    product, product_path = args
+    return process_product(product, product_path)
 
 
 def _get_total_files(input_path, products):
@@ -126,23 +132,34 @@ def process_products(
     config: dict, input_path: str
 ) -> tuple[list[models.Product], dict[str, list]]:
     products = models.Product.get_products(config)
+    if not products:
+        return [], {}
     result = list()
     srgs_dict = dict()
     total_files = _get_total_files(input_path, products)
+    product_jobs = []
+    for product in products:
+        product_path = pathlib.Path(input_path) / product.short_name
+        if not product_path.exists():
+            logging.error(
+                f"Unable to find path for {product.short_name} at {product_path}"
+            )
+            exit(4)
+        product_jobs.append((product, product_path))
+
     with tqdm(total=total_files, desc="Processing all STIG files", unit="file") as pbar:
-        for product in products:
-            product_path = pathlib.Path(input_path) / product.short_name
-            if not product_path.exists():
-                logging.error(
-                    f"Unable to find path for {product.short_name} at {product_path}"
-                )
-                exit(4)
-            product, srgs = process_product(product, product_path, pbar)
-            for srg, controls in srgs.items():
-                if srg not in srgs_dict.keys():
-                    srgs_dict[srg] = controls
-                else:
-                    for control in controls:
-                        srgs_dict[srg].append(control)
-            result.append(product)
+        with multiprocessing.Pool(
+            min(multiprocessing.cpu_count(), len(product_jobs)),
+            initializer=_prep_models,
+            initargs=(False,),
+        ) as pool:
+            for product, srgs in pool.imap(_process_product_args, product_jobs):
+                pbar.update(len(product.stigs))
+                for srg, controls in srgs.items():
+                    if srg not in srgs_dict.keys():
+                        srgs_dict[srg] = controls
+                    else:
+                        for control in controls:
+                            srgs_dict[srg].append(control)
+                result.append(product)
     return result, srgs_dict
